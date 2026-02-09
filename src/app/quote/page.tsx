@@ -141,10 +141,10 @@ export default function QuotePage() {
             <header className="bg-white shadow-sm py-4">
                 <div className="container mx-auto px-6 flex justify-between items-center">
                     <a href="/" className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#4E1686] to-[#8CC63F] flex items-center justify-center text-white font-bold text-lg">
+                        {/* <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#4E1686] to-[#8CC63F] flex items-center justify-center text-white font-bold text-lg">
                             L
-                        </div>
-                        <span className="text-xl font-bold text-[#002B5C] tracking-tight">Life Insurance</span>
+                        </div> */}
+                        <span className="text-2xl font-bold text-[#002B5C] tracking-tight">coverme.lk</span>
                     </a>
                     <a href="/" className="text-sm font-medium text-gray-600 hover:text-[#4E1686] transition">Back to Home</a>
                 </div>
