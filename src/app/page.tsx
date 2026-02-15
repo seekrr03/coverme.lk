@@ -23,9 +23,14 @@ export default function Home() {
           <div className="container mx-auto px-6 flex justify-between items-center">
             {/* Logo */}
             <Link href="/">
-              <span className="text-3xl font-black tracking-tighter text-[#002B5C] drop-shadow-sm hover:scale-105 transition-transform duration-300 cursor-pointer block">
-                Coverme.lk
-              </span>
+              <Image
+                src="/logo.png"
+                alt="Coverme.lk"
+                width={280}
+                height={70}
+                className="h-16 w-auto object-contain cursor-pointer hover:scale-105 transition-transform duration-300"
+                priority
+              />
             </Link>
 
             {/* Desktop Navigation Links */}
