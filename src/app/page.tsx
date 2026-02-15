@@ -124,8 +124,8 @@ export default function Home() {
       {/* Footer */}
       <footer className="bg-[#002B5C] text-gray-300 py-8 text-center text-sm">
         <div className="container mx-auto px-4">
-          <p className="mb-2">&copy; {new Date().getFullYear()} Life Insurance Agent. All Rights Reserved.</p>
-          <p>Protecting what matters most.</p>
+          <p className="mb-2">&copy; {new Date().getFullYear()} Coverme.lk. All Rights Reserved.</p>
+          <p className="font-medium text-gray-400">Powered by an agent from Softlogic Life Insurance</p>
         </div>
       </footer>
     </div>
