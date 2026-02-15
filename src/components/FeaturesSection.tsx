@@ -11,8 +11,8 @@ const features = [
         ),
     },
     {
-        title: 'Instant Approval',
-        description: 'Get your policy issued in minutes with our automated underwriting system.',
+        title: 'Fast Approval',
+        description: 'Get your policy issued within 24 hours with our efficient digital underwriting system.',
         icon: (
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -41,21 +41,25 @@ const features = [
 
 export default function FeaturesSection() {
     return (
-        <section className="py-20 bg-white">
+        <section className="py-12 bg-gradient-to-b from-white to-purple-50">
             <div className="container mx-auto px-6">
-                <div className="text-center max-w-2xl mx-auto mb-16">
+                <div className="text-center max-w-2xl mx-auto mb-10">
                     <h2 className="text-3xl md:text-4xl font-bold text-[#002B5C] mb-4">Why Choose Coverme.lk?</h2>
-                    <p className="text-gray-600">We make insurance simple, transparent, and accessible for everyone.</p>
+                    <p className="text-gray-800 text-lg">We make insurance simple, transparent, and accessible for everyone.</p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {features.map((feature, index) => (
-                        <div key={index} className="p-6 rounded-2xl bg-gray-50 border border-gray-100 hover:shadow-lg transition-all duration-300 group hover:-translate-y-1">
-                            <div className="w-12 h-12 rounded-xl bg-[#4E1686]/10 text-[#4E1686] flex items-center justify-center mb-4 group-hover:bg-[#4E1686] group-hover:text-white transition-colors duration-300">
-                                {feature.icon}
+                        <div key={index} className="relative p-8 rounded-3xl bg-white border border-gray-100 shadow-sm hover:shadow-2xl transition-all duration-300 group hover:-translate-y-2 overflow-hidden">
+                            <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#4E1686]/5 to-transparent rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-150 duration-500"></div>
+
+                            <div className="relative z-10">
+                                <div className="w-14 h-14 rounded-2xl bg-[#F3F4F6] text-[#4E1686] flex items-center justify-center mb-6 group-hover:bg-[#4E1686] group-hover:text-white transition-all duration-300 shadow-inner group-hover:shadow-lg group-hover:scale-110">
+                                    {feature.icon}
+                                </div>
+                                <h3 className="text-xl font-bold text-[#002B5C] mb-3 group-hover:text-[#4E1686] transition-colors">{feature.title}</h3>
+                                <p className="text-gray-600 text-base leading-relaxed">{feature.description}</p>
                             </div>
-                            <h3 className="text-xl font-bold text-[#002B5C] mb-2">{feature.title}</h3>
-                            <p className="text-gray-600 text-sm leading-relaxed">{feature.description}</p>
                         </div>
                     ))}
                 </div>

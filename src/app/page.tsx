@@ -1,82 +1,89 @@
 'use client';
 
-import HeroCarousel from '@/components/HeroCarousel';
+import React, { useState } from 'react';
+import Image from 'next/image';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import FeaturesSection from '@/components/FeaturesSection';
 import HowItWorksSection from '@/components/HowItWorksSection';
 import TestimonialsSection from '@/components/TestimonialsSection';
 import FAQSection from '@/components/FAQSection';
+import Link from 'next/link';
+import Footer from '@/components/Footer';
 
 export default function Home() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   return (
     <div className="min-h-screen font-sans bg-gray-50 text-[#002B5C]">
       {/* Header */}
-      <header className="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm border-b border-gray-100 transition-all duration-300">
-        <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#4E1686] to-[#8CC63F] flex items-center justify-center text-white font-bold text-lg">
-              L
-            </div>
-            <span className="text-xl font-bold text-[#002B5C] tracking-tight">Coverme.lk</span>
+      {/* Header Container */}
+      <header className="w-full z-50 relative shadow-md bg-white">
+        {/* Main Navbar - White */}
+        <div className="py-4 border-b border-gray-100">
+          <div className="container mx-auto px-6 flex justify-between items-center">
+            {/* Logo */}
+            <Link href="/">
+              <span className="text-3xl font-black tracking-tighter text-[#002B5C] drop-shadow-sm hover:scale-105 transition-transform duration-300 cursor-pointer block">
+                Coverme.lk
+              </span>
+            </Link>
+
+            {/* Desktop Navigation Links */}
+            <nav className="hidden md:flex items-center gap-8 font-semibold text-gray-600">
+              <Link href="/" className="hover:text-[#4E1686] transition-colors text-[#4E1686]">Home</Link>
+              <Link href="#features" className="hover:text-[#4E1686] transition-colors">Features</Link>
+              <Link href="#how-it-works" className="hover:text-[#4E1686] transition-colors">How it Works</Link>
+              <Link href="/quote" className="bg-[#4E1686] text-white px-6 py-2 rounded-full hover:bg-[#3d126b] transition-colors shadow-md">Get Quote</Link>
+            </nav>
+
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden relative z-50 text-[#002B5C] p-2 focus:outline-none"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              {isMobileMenuOpen ? (
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
+              ) : (
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" /></svg>
+              )}
+            </button>
           </div>
-          <nav className="hidden md:flex space-x-8 text-sm font-medium text-gray-600">
-            <a href="#" className="hover:text-[#4E1686] transition-colors duration-200">Home</a>
-            <a href="#" className="hover:text-[#4E1686] transition-colors duration-200">Plans</a>
-            <a href="#" className="hover:text-[#4E1686] transition-colors duration-200">About</a>
-            <a href="#" className="hover:text-[#4E1686] transition-colors duration-200">Contact</a>
-          </nav>
-          <a href="/quote" className="hidden md:inline-block bg-[#4E1686] hover:bg-[#3d1169] text-white text-sm font-bold py-2 px-6 rounded-full transition shadow-md hover:shadow-lg">
-            Get Quote
-          </a>
+
+          {/* Mobile Menu Overlay */}
+          <div className={`md:hidden fixed inset-0 bg-white/95 backdrop-blur-xl z-40 flex flex-col items-center justify-center transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full pointer-events-none'}`}>
+            <nav className="flex flex-col items-center space-y-8 text-2xl font-bold text-[#002B5C]">
+              <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-[#4E1686] transition-colors">Home</Link>
+              <Link href="#features" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-[#4E1686] transition-colors">Features</Link>
+              <Link href="#how-it-works" onClick={() => setIsMobileMenuOpen(false)} className="hover:text-[#4E1686] transition-colors">How it Works</Link>
+              <Link href="/quote" onClick={() => setIsMobileMenuOpen(false)} className="bg-[#8CC63F] text-white px-10 py-4 rounded-full shadow-lg hover:bg-[#7ab332] transition-colors">Get Quote</Link>
+            </nav>
+          </div>
         </div>
       </header>
 
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#F3F4F6] to-[#E5E7EB] min-h-screen flex items-center pt-32 pb-40 overflow-hidden">
+      <section className="relative bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-100 via-white to-green-100 min-h-[calc(100vh-80px)] flex items-center py-12 md:py-20 overflow-hidden">
         <div className="container mx-auto px-6 relative z-10">
-          <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-32">
+          <div className="flex flex-col items-center gap-10">
             {/* Text Content */}
-            <div className="w-full lg:w-1/2 text-center lg:text-left space-y-10">
-              <div className="inline-block bg-purple-100/80 backdrop-blur-sm text-[#4E1686] px-6 py-2 rounded-full text-xs font-bold tracking-[0.2em] uppercase shadow-sm border border-purple-200/50">
-                100% Online Process
-              </div>
-              <h1 className="text-6xl lg:text-8xl font-black text-[#002B5C] leading-[0.9] tracking-tighter">
+            <div className="w-full max-w-5xl text-center space-y-8 md:space-y-12">
+              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black text-[#002B5C] leading-[1.1] lg:leading-[0.9] tracking-tighter">
                 Secure <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8CC63F] to-[#4E1686]">Your</span> Future
               </h1>
-              <p className="text-xl text-gray-600 leading-relaxed max-w-lg mx-auto lg:mx-0 font-light tracking-wide">
+              <p className="text-base sm:text-lg lg:text-2xl text-gray-900 lg:text-gray-600 leading-relaxed max-w-3xl mx-auto font-medium lg:font-light tracking-wide px-4">
                 Designed for busy professionals and their families. Experience a fully digital onboarding process with zero paperwork on Coverme.lk.
               </p>
-              <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start pt-6">
-                <a href="/quote" className="group bg-[#8CC63F] hover:bg-[#7ab332] text-white text-lg font-bold py-5 px-10 rounded-full transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 flex items-center justify-center gap-3">
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 justify-center pt-4 sm:pt-8 px-6">
+                <a href="/quote" className="group bg-[#8CC63F] hover:bg-[#7ab332] text-white text-lg font-bold py-4 px-8 sm:py-5 sm:px-10 rounded-full transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 flex items-center justify-center gap-2 sm:gap-3 w-full sm:w-auto">
                   Get Quote
-                  <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                 </a>
-                <a href="#" className="text-[#002B5C] font-bold py-5 px-10 rounded-full border-2 border-gray-200 hover:border-[#4E1686] hover:text-[#4E1686] transition-all duration-300 flex items-center justify-center">
+                <a href="#features" className="text-[#002B5C] font-bold text-lg py-4 px-8 sm:py-5 sm:px-10 rounded-full border-2 border-gray-200 hover:border-[#4E1686] hover:text-[#4E1686] transition-all duration-300 flex items-center justify-center w-full sm:w-auto">
                   Learn More
                 </a>
               </div>
-              <div className="pt-10 flex items-center justify-center lg:justify-start gap-8 text-xs font-bold uppercase tracking-widest text-gray-400">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-[#8CC63F]"></div>
-                  <span>Instant Approval</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-[#4E1686]"></div>
-                  <span>24/7 Digital Support</span>
-                </div>
-              </div>
-            </div>
 
-            {/* Hero Feature Cards (Carousel) */}
-            <div className="w-full lg:w-1/2 relative flex items-center justify-center">
-              <HeroCarousel />
-
-              {/* Decorative Background Blobs */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-[500px] max-h-[500px] z-0 pointer-events-none">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-[#8CC63F] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
-                <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#4E1686] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
-              </div>
             </div>
           </div>
         </div>
@@ -86,10 +93,14 @@ export default function Home() {
       <WhatsAppButton />
 
       {/* Features Section */}
-      <FeaturesSection />
+      <div id="features">
+        <FeaturesSection />
+      </div>
 
       {/* How It Works Section */}
-      <HowItWorksSection />
+      <div id="how-it-works">
+        <HowItWorksSection />
+      </div>
 
       {/* Testimonials Section */}
       <TestimonialsSection />
@@ -97,37 +108,12 @@ export default function Home() {
       {/* FAQ Section */}
       <FAQSection />
 
-      {/* "Create Your Own Plan" Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-6">
-          <div className="bg-[#002B5C] rounded-3xl p-8 md:p-12 shadow-2xl overflow-hidden relative">
-            {/* Background Pattern */}
-            <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-
-            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8 text-center md:text-left">
-              <div className="space-y-4 max-w-2xl">
-                <h2 className="text-3xl md:text-4xl font-bold text-white">Build Your Perfect Coverage</h2>
-                <p className="text-gray-300 text-lg">
-                  No two lives are the same. Select only what you need. Customize your coverage amounts, add riders, and adjust benefits to perfectly fit your lifestyle and budget.
-                </p>
-              </div>
-              <div className="flex-shrink-0">
-                <a href="/quote" className="inline-flex items-center justify-center px-8 py-4 border border-transparent text-lg font-bold rounded-xl text-[#002B5C] bg-white hover:bg-gray-100 transition shadow-lg hover:shadow-xl transform hover:-translate-y-1 gap-2">
-                  Start Customizing <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Footer */}
-      <footer className="bg-[#002B5C] text-gray-300 py-8 text-center text-sm">
-        <div className="container mx-auto px-4">
-          <p className="mb-2">&copy; {new Date().getFullYear()} Coverme.lk. All Rights Reserved.</p>
-          <p className="font-medium text-gray-400">Powered by an agent from Softlogic Life Insurance</p>
-        </div>
-      </footer>
+      <Footer />
+
+
+
+
     </div>
   );
 }
