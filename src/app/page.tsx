@@ -2,6 +2,10 @@
 
 import HeroCarousel from '@/components/HeroCarousel';
 import WhatsAppButton from '@/components/WhatsAppButton';
+import FeaturesSection from '@/components/FeaturesSection';
+import HowItWorksSection from '@/components/HowItWorksSection';
+import TestimonialsSection from '@/components/TestimonialsSection';
+import FAQSection from '@/components/FAQSection';
 
 export default function Home() {
   return (
@@ -13,7 +17,7 @@ export default function Home() {
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#4E1686] to-[#8CC63F] flex items-center justify-center text-white font-bold text-lg">
               L
             </div>
-            <span className="text-xl font-bold text-[#002B5C] tracking-tight">Life Insurance</span>
+            <span className="text-xl font-bold text-[#002B5C] tracking-tight">Coverme.lk</span>
           </div>
           <nav className="hidden md:flex space-x-8 text-sm font-medium text-gray-600">
             <a href="#" className="hover:text-[#4E1686] transition-colors duration-200">Home</a>
@@ -41,7 +45,7 @@ export default function Home() {
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8CC63F] to-[#4E1686]">Your</span> Future
               </h1>
               <p className="text-xl text-gray-600 leading-relaxed max-w-lg mx-auto lg:mx-0 font-light tracking-wide">
-                Designed for busy professionals and their families. Experience a fully digital onboarding process with zero paperwork.
+                Designed for busy professionals and their families. Experience a fully digital onboarding process with zero paperwork on Coverme.lk.
               </p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start pt-6">
                 <a href="/quote" className="group bg-[#8CC63F] hover:bg-[#7ab332] text-white text-lg font-bold py-5 px-10 rounded-full transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 flex items-center justify-center gap-3">
@@ -80,6 +84,18 @@ export default function Home() {
 
       {/* WhatsApp Floating Button */}
       <WhatsAppButton />
+
+      {/* Features Section */}
+      <FeaturesSection />
+
+      {/* How It Works Section */}
+      <HowItWorksSection />
+
+      {/* Testimonials Section */}
+      <TestimonialsSection />
+
+      {/* FAQ Section */}
+      <FAQSection />
 
       {/* "Create Your Own Plan" Section */}
       <section className="py-20 bg-white">
