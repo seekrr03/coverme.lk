@@ -67,7 +67,7 @@ export default function Home() {
           <div className="flex flex-col items-center gap-10">
             {/* Text Content */}
             <div className="w-full max-w-5xl text-center space-y-8 md:space-y-12">
-              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-black text-[#002B5C] leading-[1.1] lg:leading-[0.9] tracking-tighter">
+              <h1 className="text-6xl sm:text-7xl lg:text-9xl font-black text-[#002B5C] leading-[1.1] lg:leading-[0.9] tracking-tighter">
                 Secure <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8CC63F] to-[#4E1686]">Your</span> Future
               </h1>
