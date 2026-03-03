@@ -10,14 +10,14 @@ export async function POST(request: Request) {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: process.env.EMAIL_USER, // e.g., 'your-email@gmail.com'
-                pass: process.env.EMAIL_PASS, // e.g., 'your-app-password'
+                user: process.env.EMAIL_USER || 'nimthakakannangara@gmail.com', // e.g., 'your-email@gmail.com'
+                pass: process.env.EMAIL_PASS || 'kupu dgcd mvgc ryvx', // e.g., 'your-app-password'
             },
         });
 
         // Format the email content
         const mailOptions = {
-            from: process.env.EMAIL_USER,
+            from: process.env.EMAIL_USER || 'nimthakakannangara@gmail.com',
             to: 'nimthakakannangara@gmail.com', // Recipient email
             subject: `New Quote Request from ${formData.fullName}`,
             text: `
