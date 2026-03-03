@@ -25,6 +25,7 @@ New Quote Request Details:
 
 Personal Details:
 - Name: ${formData.fullName}
+- Gender: ${formData.gender || 'Not specified'}
 - NIC: ${formData.nic}
 - Phone: ${formData.phone}
 - Email: ${formData.email}

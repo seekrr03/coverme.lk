@@ -12,6 +12,8 @@ export default function QuotePage() {
         incomePrimary: '',
         incomeInvestment: '',
         incomeOther: '',
+        gender: '', // male, female
+        maternityBenefit: false,
         civilStatus: 'single', // single, married, divorced
         spouseName: '',
         spouseDob: '',
@@ -254,6 +256,26 @@ export default function QuotePage() {
                                             placeholder="Type your current address here..."
                                         ></textarea>
                                     </div>
+
+                                    <div className="mt-5 animate-fade-in">
+                                        <label className="block text-sm font-semibold mb-2">Gender</label>
+                                        <div className="flex gap-6">
+                                            {['male', 'female'].map((g) => (
+                                                <label key={g} className="flex items-center cursor-pointer">
+                                                    <input
+                                                        type="radio"
+                                                        name="gender"
+                                                        value={g}
+                                                        required
+                                                        checked={formData.gender === g}
+                                                        onChange={handleInputChange}
+                                                        className="h-4 w-4 text-[#4E1686] focus:ring-[#4E1686] border-gray-300"
+                                                    />
+                                                    <span className="ml-2 capitalize text-gray-700">{g}</span>
+                                                </label>
+                                            ))}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -322,10 +344,10 @@ export default function QuotePage() {
                                                         <input
                                                             type="text"
                                                             name="spouseName"
-                                                            required
                                                             value={formData.spouseName}
                                                             onChange={handleInputChange}
                                                             className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none bg-white"
+                                                            placeholder="Optional"
                                                         />
                                                     </div>
                                                     <div>
@@ -333,10 +355,10 @@ export default function QuotePage() {
                                                         <input
                                                             type="text"
                                                             name="spouseNic"
-                                                            required
                                                             value={formData.spouseNic}
                                                             onChange={handleInputChange}
                                                             className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none bg-white"
+                                                            placeholder="Optional"
                                                         />
                                                     </div>
                                                 </div>
@@ -504,6 +526,22 @@ export default function QuotePage() {
                                                     <span className="text-sm text-gray-500">Daily benefit for income loss, medical bills & transport.</span>
                                                 </div>
                                             </label>
+
+                                            {/* Maternity Benefit (Female Only) */}
+                                            {formData.gender === 'female' && (
+                                                <label className="flex items-start gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-purple-50 transition-colors border border-transparent hover:border-purple-200">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={formData.maternityBenefit}
+                                                        onChange={(e) => setFormData({ ...formData, maternityBenefit: e.target.checked })}
+                                                        className="mt-1 w-5 h-5 text-[#4E1686] rounded border-gray-300 focus:ring-[#4E1686]"
+                                                    />
+                                                    <div>
+                                                        <span className="block font-bold text-[#002B5C]">Maternity Benefit</span>
+                                                        <span className="text-sm text-gray-500">Comprehensive coverage for pregnancy and childbirth related expenses.</span>
+                                                    </div>
+                                                </label>
+                                            )}
                                         </div>
                                     )}
 
@@ -664,6 +702,20 @@ export default function QuotePage() {
                                                 <div>
                                                     <span className="block font-bold text-[#002B5C]">Premium Protection Benefit (On Spouse)</span>
                                                     <span className="text-sm text-gray-500">Waives premiums if spouse is permanently disabled.</span>
+                                                </div>
+                                            </label>
+
+                                            {/* 8. Maternity Benefit */}
+                                            <label className="flex items-start gap-3 p-4 bg-purple-50/50 rounded-xl cursor-pointer hover:bg-purple-50 transition-colors border border-purple-100/50 hover:border-purple-200">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={formData.maternityBenefit}
+                                                    onChange={(e) => setFormData({ ...formData, maternityBenefit: e.target.checked })}
+                                                    className="mt-1 w-5 h-5 text-[#4E1686] rounded border-gray-300 focus:ring-[#4E1686]"
+                                                />
+                                                <div>
+                                                    <span className="block font-bold text-[#002B5C]">Maternity Benefit</span>
+                                                    <span className="text-sm text-gray-500">Comprehensive coverage for pregnancy and childbirth related expenses.</span>
                                                 </div>
                                             </label>
                                         </div>
