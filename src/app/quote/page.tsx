@@ -347,7 +347,7 @@ export default function QuotePage() {
                                                             value={formData.spouseName}
                                                             onChange={handleInputChange}
                                                             className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none bg-white"
-                                                            placeholder="Optional"
+                                                            placeholder="Optional (Only if adding spouse)"
                                                         />
                                                     </div>
                                                     <div>
@@ -358,7 +358,7 @@ export default function QuotePage() {
                                                             value={formData.spouseNic}
                                                             onChange={handleInputChange}
                                                             className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none bg-white"
-                                                            placeholder="Optional"
+                                                            placeholder="Optional (Only if adding spouse)"
                                                         />
                                                     </div>
                                                 </div>
