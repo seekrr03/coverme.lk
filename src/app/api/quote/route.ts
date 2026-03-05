@@ -5,6 +5,14 @@ export async function POST(request: Request) {
     try {
         const formData = await request.json();
 
+        // Calculate Age specifically for year 2026
+        let age = 'N/A';
+        if (formData.dob) {
+            const birthDate = new Date(formData.dob);
+            // Simple year difference for 2026
+            age = (2026 - birthDate.getFullYear()).toString();
+        }
+
         // Create a transporter using Gmail (or configure for your SMTP provider)
         // Note: For Gmail, you need an App Password if 2FA is enabled.
         const transporter = nodemailer.createTransport({
@@ -26,28 +34,27 @@ New Quote Request Details:
 Personal Details:
 - Name: ${formData.fullName}
 - Gender: ${formData.gender || 'Not specified'}
+- Date of Birth: ${formData.dob || 'Not specified'} (Age for 2026: ${age} years)
 - NIC: ${formData.nic}
 - Phone: ${formData.phone}
 - Email: ${formData.email}
 - Address: ${formData.address}
 - Civil Status: ${formData.civilStatus}
 
-Family Plan: ${formData.familyPlan ? 'Yes' : 'No'}
+Dependent Details:
+${formData.civilStatus === 'married' ? `- Spouse Occupation: ${formData.spouseOccupation || 'Not specified'}` : ''}
+${formData.childCount && parseInt(formData.childCount) > 0 ? `- Children (${formData.childCount}):\n` + formData.children.map((c: any) => `  * ${c.name} (DOB: ${c.dob})`).join('\n') : '- Children: None'}
+
+Family Plan Coverage: ${formData.familyPlan ? 'Yes' : 'No'}
 ${formData.familyPlan ? `
-Spouse Details:
+Spouse Coverage Details:
 - Name: ${formData.spouseName}
 - NIC: ${formData.spouseNic}
-
-Children (${formData.childCount}):
-${formData.children.map((c: any) => `- ${c.name} (${c.dob})`).join('\n')}
 ` : ''}
 
 Financial & Professional:
-- Company: ${formData.company}
-- Occupation: ${formData.occupation}
-- Income Sources: ${formData.incomeSource1}, ${formData.incomeSource2}, ${formData.incomeSource3}
-- Assets:
-${formData.assets.map((a: any) => `- ${a.type}: ${a.value}`).join('\n')}
+- Occupation: ${formData.occupation || 'Not specified'}
+- Monthly Gross Income: ${formData.monthlyIncome || 'Not specified'}
 
 Selected Benefits:
 ${Object.keys(formData).filter(k => formData[k] === true && !['familyPlan'].includes(k)).join(', ')}

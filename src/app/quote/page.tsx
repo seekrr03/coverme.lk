@@ -8,16 +8,17 @@ export default function QuotePage() {
         phone: '',
         email: '',
         nic: '',
+        dob: '',
         address: '',
-        incomePrimary: '',
-        incomeInvestment: '',
-        incomeOther: '',
+        monthlyIncome: '',
+        otherIncome: '',
         gender: '', // male, female
         maternityBenefit: false,
-        civilStatus: 'single', // single, married, divorced
+        civilStatus: 'single', // single, married, separated, divorced, widowed
         spouseName: '',
         spouseDob: '',
         spouseNic: '',
+        spouseOccupation: '',
         familyPlan: false,
         children: [] as { name: string; dob: string }[],
         childCount: '', // New field for simple child count input
@@ -32,15 +33,7 @@ export default function QuotePage() {
         premiumProtectionSpouse: false, // New: "Premium Protection (Spouse)"
         company: '',
         occupation: '',
-        incomeSource1: '',
-        incomeSource2: '',
-        incomeSource3: '',
-        assets: [
-            { type: '', value: '' },
-            { type: '', value: '' },
-            { type: '', value: '' }
-        ] as { type: string; value: string }[],
-        education: '',
+
         globalCover: false,
         additionalNotes: '',
     });
@@ -57,15 +50,20 @@ export default function QuotePage() {
     };
 
     const handleCivilStatusChange = (status: string) => {
+        const isMarried = status === 'married';
+        const hasChildrenOption = status !== 'single';
+
         setFormData(prev => ({
             ...prev,
             civilStatus: status,
             // Reset dependent fields if not married
-            spouseName: status === 'married' ? prev.spouseName : '',
-            spouseNic: status === 'married' ? prev.spouseNic : '',
-            familyPlan: status === 'married' ? prev.familyPlan : false,
-            children: status === 'married' ? prev.children : [],
-            childCount: status === 'married' ? prev.childCount : ''
+            spouseName: isMarried ? prev.spouseName : '',
+            spouseNic: isMarried ? prev.spouseNic : '',
+            spouseOccupation: isMarried ? prev.spouseOccupation : '',
+            familyPlan: isMarried ? prev.familyPlan : false,
+            // Reset children info if single
+            children: hasChildrenOption ? prev.children : [],
+            childCount: hasChildrenOption ? prev.childCount : ''
         }));
     };
 
@@ -141,25 +139,6 @@ export default function QuotePage() {
         });
     };
 
-    const handleAssetChange = (index: number, field: 'type' | 'value', value: string) => {
-        const newAssets = [...formData.assets];
-        newAssets[index][field] = value;
-        setFormData(prev => ({ ...prev, assets: newAssets }));
-    };
-
-    const addAssetRow = () => {
-        setFormData(prev => ({
-            ...prev,
-            assets: [...prev.assets, { type: '', value: '' }]
-        }));
-    };
-
-    const removeAssetRow = (index: number) => {
-        setFormData(prev => ({
-            ...prev,
-            assets: prev.assets.filter((_, i) => i !== index)
-        }));
-    };
 
     return (
         <div className="min-h-screen font-sans bg-gray-50 text-[#002B5C]">
@@ -238,6 +217,17 @@ export default function QuotePage() {
                                             placeholder="your@email.com"
                                         />
                                     </div>
+                                    <div>
+                                        <label className="block text-sm font-semibold mb-1">Date of Birth</label>
+                                        <input
+                                            type="date"
+                                            name="dob"
+                                            required
+                                            value={formData.dob}
+                                            onChange={handleInputChange}
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8CC63F] outline-none transition"
+                                        />
+                                    </div>
                                 </div>
 
 
@@ -283,8 +273,8 @@ export default function QuotePage() {
                             {/* Civil Status */}
                             <div className="space-y-4">
                                 <h3 className="text-lg font-medium text-[#4E1686] border-b pb-2 border-purple-100">Civil Status</h3>
-                                <div className="flex gap-6">
-                                    {['single', 'married', 'divorced'].map((status) => (
+                                <div className="flex flex-wrap gap-4">
+                                    {['single', 'married', 'separated', 'divorced', 'widowed'].map((status) => (
                                         <label key={status} className="flex items-center cursor-pointer">
                                             <input
                                                 type="radio"
@@ -299,128 +289,142 @@ export default function QuotePage() {
                                     ))}
                                 </div>
 
-                                {/* Married Logic */}
-                                {formData.civilStatus === 'married' && (
-                                    <div className="space-y-6 pl-4 border-l-2 border-purple-100 bg-purple-50 p-4 rounded-r-lg">
+                                {/* Dependent Details for Non-Single */}
+                                {formData.civilStatus !== 'single' && (
+                                    <div className="space-y-6 pl-4 border-l-2 border-purple-100 bg-purple-50 p-4 rounded-r-lg mt-4">
 
-                                        {/* Child Count Input (Non-Family Plan Position - moves if selected) */}
-                                        {!formData.familyPlan && (
+                                        {/* Spouse Occupation (Only if Married) */}
+                                        {formData.civilStatus === 'married' && (
                                             <div className="mb-4 animate-fade-in">
-                                                <label className="block text-sm font-semibold mb-1">Number of Children</label>
-                                                <input
-                                                    type="number"
-                                                    min="0"
-                                                    name="childCount"
+                                                <label className="block text-sm font-semibold mb-1">Spouse's Occupation</label>
+                                                <select
+                                                    name="spouseOccupation"
                                                     required
-                                                    value={formData.childCount}
-                                                    onChange={handleChildCountChange}
-                                                    className="w-full md:w-1/2 px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-[#8CC63F] transition"
-                                                    placeholder="0"
-                                                />
+                                                    value={formData.spouseOccupation}
+                                                    onChange={handleInputChange}
+                                                    className="w-full md:w-1/2 px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-[#8CC63F] transition bg-white"
+                                                >
+                                                    <option value="" disabled>Select Occupation</option>
+                                                    <option value="A professional">A professional</option>
+                                                    <option value="Businessman">Businessman</option>
+                                                    <option value="Corporate employee">Corporate employee</option>
+                                                    <option value="Housewife">Housewife</option>
+                                                </select>
                                             </div>
                                         )}
 
-                                        {/* Family Plan Trigger */}
-                                        <div className="flex items-center">
+                                        {/* Child Count Input */}
+                                        <div className="mb-4 animate-fade-in">
+                                            <label className="block text-sm font-semibold mb-1">Number of Children</label>
                                             <input
-                                                id="familyPlan"
-                                                name="familyPlan"
-                                                type="checkbox"
-                                                checked={formData.familyPlan}
-                                                onChange={handleInputChange}
-                                                className="h-5 w-5 text-[#4E1686] focus:ring-[#4E1686] border-gray-300 rounded cursor-pointer"
+                                                type="number"
+                                                min="0"
+                                                name="childCount"
+                                                required
+                                                value={formData.childCount}
+                                                onChange={handleChildCountChange}
+                                                className="w-full md:w-1/2 px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-[#8CC63F] transition bg-white"
+                                                placeholder="0"
                                             />
-                                            <label htmlFor="familyPlan" className="ml-3 block text-base font-bold text-[#4E1686] cursor-pointer">
-                                                Interested in a Family Plan?
-                                            </label>
                                         </div>
 
-                                        {/* Gated Fields */}
-                                        {formData.familyPlan && (
-                                            <div className="space-y-4 animate-fade-in">
-                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                                    <div>
-                                                        <label className="block text-sm font-semibold mb-1">Spouse Full Name</label>
-                                                        <input
-                                                            type="text"
-                                                            name="spouseName"
-                                                            value={formData.spouseName}
-                                                            onChange={handleInputChange}
-                                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none bg-white"
-                                                            placeholder="Optional (Only if adding spouse)"
-                                                        />
+                                        {/* Children Details List */}
+                                        {parseInt(formData.childCount) > 0 && (
+                                            <div className="mb-4 animate-fade-in">
+                                                <p className="text-sm font-semibold text-gray-700 mb-2">Children Details</p>
+                                                {formData.children.map((child, index) => (
+                                                    <div key={index} className="flex gap-2 items-end bg-white p-3 rounded shadow-sm mb-2">
+                                                        <div className="flex-1">
+                                                            <label className="text-xs text-gray-500">Child's Name</label>
+                                                            <input
+                                                                type="text"
+                                                                required
+                                                                value={child.name}
+                                                                onChange={(e) => updateChild(index, 'name', e.target.value)}
+                                                                className="w-full border-b border-gray-300 focus:border-[#8CC63F] outline-none px-1 py-1 text-sm"
+                                                                placeholder="Name"
+                                                            />
+                                                        </div>
+                                                        <div className="w-1/3">
+                                                            <label className="text-xs text-gray-500">Date of Birth</label>
+                                                            <input
+                                                                type="date"
+                                                                required
+                                                                value={child.dob}
+                                                                onChange={(e) => updateChild(index, 'dob', e.target.value)}
+                                                                className="w-full border-b border-gray-300 focus:border-[#8CC63F] outline-none px-1 py-1 text-sm"
+                                                            />
+                                                        </div>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => removeChild(index)}
+                                                            className="text-red-500 hover:text-red-700 text-sm font-bold px-2"
+                                                        >
+                                                            &times;
+                                                        </button>
                                                     </div>
-                                                    <div>
-                                                        <label className="block text-sm font-semibold mb-1">Spouse NIC</label>
-                                                        <input
-                                                            type="text"
-                                                            name="spouseNic"
-                                                            value={formData.spouseNic}
-                                                            onChange={handleInputChange}
-                                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none bg-white"
-                                                            placeholder="Optional (Only if adding spouse)"
-                                                        />
-                                                    </div>
+                                                ))}
+                                                <button
+                                                    type="button"
+                                                    onClick={addChild}
+                                                    className="text-sm text-[#8CC63F] font-semibold hover:text-[#7ab332] flex items-center gap-1"
+                                                >
+                                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
+                                                    Add Child
+                                                </button>
+                                            </div>
+                                        )}
+
+                                        {/* Family Plan Logic (Only if Married) */}
+                                        {formData.civilStatus === 'married' && (
+                                            <>
+                                                <div className="flex items-center mt-6">
+                                                    <input
+                                                        id="familyPlan"
+                                                        name="familyPlan"
+                                                        type="checkbox"
+                                                        checked={formData.familyPlan}
+                                                        onChange={handleInputChange}
+                                                        className="h-5 w-5 text-[#4E1686] focus:ring-[#4E1686] border-gray-300 rounded cursor-pointer"
+                                                    />
+                                                    <label htmlFor="familyPlan" className="ml-3 block text-base font-bold text-[#4E1686] cursor-pointer">
+                                                        Interested in a Family Plan?
+                                                    </label>
                                                 </div>
 
-                                                <div className="pt-2">
-                                                    <div className="mb-4">
-                                                        <label className="block text-sm font-semibold mb-1">Number of Children</label>
-                                                        <input
-                                                            type="number"
-                                                            name="childCount"
-                                                            min="0"
-                                                            required
-                                                            value={formData.childCount}
-                                                            onChange={handleChildCountChange}
-                                                            className="w-full md:w-1/2 px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-[#8CC63F] transition bg-white"
-                                                            placeholder="0"
-                                                        />
-                                                    </div>
-
-                                                    <p className="text-sm font-semibold text-gray-700 mb-2">Children Details</p>
-                                                    {formData.children.map((child, index) => (
-                                                        <div key={index} className="flex gap-2 items-end bg-white p-3 rounded shadow-sm mb-2">
-                                                            <div className="flex-1">
-                                                                <label className="text-xs text-gray-500">Child's Name</label>
+                                                {/* Gated Fields for Spouse */}
+                                                {formData.familyPlan && (
+                                                    <div className="space-y-4 animate-fade-in mt-4 border-l-2 border-purple-200 pl-4 py-2">
+                                                        <p className="text-sm text-gray-500 mb-2">Since you're choosing a family plan, please provide spouse details for coverage.</p>
+                                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                            <div>
+                                                                <label className="block text-sm font-semibold mb-1">Spouse Full Name</label>
                                                                 <input
                                                                     type="text"
+                                                                    name="spouseName"
                                                                     required
-                                                                    value={child.name}
-                                                                    onChange={(e) => updateChild(index, 'name', e.target.value)}
-                                                                    className="w-full border-b border-gray-300 focus:border-[#8CC63F] outline-none px-1 py-1 text-sm"
-                                                                    placeholder="Name"
+                                                                    value={formData.spouseName}
+                                                                    onChange={handleInputChange}
+                                                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none bg-white focus:ring-2 focus:ring-[#8CC63F]"
+                                                                    placeholder="Spouse Name"
                                                                 />
                                                             </div>
-                                                            <div className="w-1/3">
-                                                                <label className="text-xs text-gray-500">Date of Birth</label>
+                                                            <div>
+                                                                <label className="block text-sm font-semibold mb-1">Spouse NIC</label>
                                                                 <input
-                                                                    type="date"
+                                                                    type="text"
+                                                                    name="spouseNic"
                                                                     required
-                                                                    value={child.dob}
-                                                                    onChange={(e) => updateChild(index, 'dob', e.target.value)}
-                                                                    className="w-full border-b border-gray-300 focus:border-[#8CC63F] outline-none px-1 py-1 text-sm"
+                                                                    value={formData.spouseNic}
+                                                                    onChange={handleInputChange}
+                                                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none bg-white focus:ring-2 focus:ring-[#8CC63F]"
+                                                                    placeholder="Spouse NIC"
                                                                 />
                                                             </div>
-                                                            <button
-                                                                type="button"
-                                                                onClick={() => removeChild(index)}
-                                                                className="text-red-500 hover:text-red-700 text-sm font-bold px-2"
-                                                            >
-                                                                &times;
-                                                            </button>
                                                         </div>
-                                                    ))}
-                                                    <button
-                                                        type="button"
-                                                        onClick={addChild}
-                                                        className="text-sm text-[#8CC63F] font-semibold hover:text-[#7ab332] flex items-center gap-1"
-                                                    >
-                                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
-                                                        Add Child
-                                                    </button>
-                                                </div>
-                                            </div>
+                                                    </div>
+                                                )}
+                                            </>
                                         )}
                                     </div>
                                 )}
@@ -726,17 +730,6 @@ export default function QuotePage() {
                                 <h3 className="text-lg font-medium text-[#4E1686] border-b pb-2 border-purple-100">Professional & Financial</h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <div>
-                                        <label className="block text-sm font-semibold mb-1">Company / Organization</label>
-                                        <input
-                                            type="text"
-                                            name="company"
-                                            required
-                                            value={formData.company}
-                                            onChange={handleInputChange}
-                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none"
-                                        />
-                                    </div>
-                                    <div>
                                         <label className="block text-sm font-semibold mb-1">Occupation / Designation</label>
                                         <input
                                             type="text"
@@ -744,112 +737,30 @@ export default function QuotePage() {
                                             required
                                             value={formData.occupation}
                                             onChange={handleInputChange}
-                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none"
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-[#8CC63F] transition"
                                         />
                                     </div>
-                                </div>
-
-                                <div className="space-y-3">
-                                    <label className="block text-sm font-semibold">Income Sources</label>
-                                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                                        <input
-                                            type="text"
-                                            name="incomeSource1"
+                                    <div>
+                                        <label className="block text-sm font-semibold mb-1">Monthly Gross Income</label>
+                                        <select
+                                            name="monthlyIncome"
                                             required
-                                            value={formData.incomeSource1}
+                                            value={formData.monthlyIncome}
                                             onChange={handleInputChange}
-                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none placeholder-gray-400 text-sm"
-                                            placeholder="Primary Income"
-                                        />
-                                        <input
-                                            type="text"
-                                            name="incomeSource2"
-                                            value={formData.incomeSource2}
-                                            onChange={handleInputChange}
-                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none placeholder-gray-400 text-sm"
-                                            placeholder="Secondary Income"
-                                        />
-                                        <input
-                                            type="text"
-                                            name="incomeSource3"
-                                            value={formData.incomeSource3}
-                                            onChange={handleInputChange}
-                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none placeholder-gray-400 text-sm"
-                                            placeholder="Other Income"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <label className="block text-sm font-semibold mb-2">Other Assets & Financial Details</label>
-                                    <div className="space-y-3">
-                                        {formData.assets.map((asset, index) => (
-                                            <div key={index} className="flex gap-3 items-center">
-                                                <div className="w-1/2">
-                                                    <select
-                                                        value={asset.type}
-                                                        onChange={(e) => handleAssetChange(index, 'type', e.target.value)}
-                                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none bg-white text-sm"
-                                                    >
-                                                        <option value="">Select Asset Type</option>
-                                                        <option value="Land">Land</option>
-                                                        <option value="Vehicle">Vehicle</option>
-                                                        <option value="House">House</option>
-                                                        <option value="Fixed Deposit">Fixed Deposit</option>
-                                                        <option value="Stocks">Stocks</option>
-                                                        <option value="Jewelry">Jewelry</option>
-                                                        <option value="Other">Other</option>
-                                                    </select>
-                                                </div>
-                                                <div className="w-1/2">
-                                                    <input
-                                                        type="text"
-                                                        placeholder="Value / Price"
-                                                        value={asset.value}
-                                                        onChange={(e) => handleAssetChange(index, 'value', e.target.value)}
-                                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none text-sm placeholder-gray-400"
-                                                    />
-                                                </div>
-                                                {/* Optional: Add delete button if needed, user only asked for add button but delete is good UX */}
-                                                {/* <button type="button" onClick={() => removeAssetRow(index)} className="text-red-500">x</button> */}
-                                            </div>
-                                        ))}
-                                        <button
-                                            type="button"
-                                            onClick={addAssetRow}
-                                            className="mt-2 text-sm font-bold text-[#4E1686] hover:text-purple-700 flex items-center gap-1"
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-[#8CC63F] transition bg-white"
                                         >
-                                            + Add Another Asset
-                                        </button>
+                                            <option value="" disabled>Select Income Range</option>
+                                            <option value="5000-80000">5,000 - 80,000</option>
+                                            <option value="80000-100000">80,000 - 100,000</option>
+                                            <option value="100000+">100,000+</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* Education & Insurance Needs */}
+                            {/* Additional Notes */}
                             <div className="space-y-4">
                                 <h3 className="text-lg font-medium text-[#4E1686] border-b pb-2 border-purple-100">Other Details</h3>
-
-                                <div>
-                                    <label className="block text-sm font-semibold mb-1">Highest Educational Qualification</label>
-                                    <select
-                                        name="education"
-                                        required
-                                        value={formData.education}
-                                        onChange={handleInputChange}
-                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none bg-white"
-                                    >
-                                        <option value="">Select Qualification</option>
-                                        <option value="OL">O/L</option>
-                                        <option value="AL">A/L</option>
-                                        <option value="Diploma">Diploma</option>
-                                        <option value="Degree">Degree</option>
-                                        <option value="Masters">Masters</option>
-                                        <option value="PhD">PhD</option>
-                                        <option value="Other">Other</option>
-                                    </select>
-                                </div>
-
-
 
                                 <div>
                                     <label className="block text-sm font-semibold mb-1">Any additional details to tell us?</label>
