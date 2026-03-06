@@ -8,8 +8,9 @@ export default function QuotePage() {
         phone: '',
         email: '',
         nic: '',
-        dob: '',
-        address: '',
+        addressLine1: '',
+        addressLine2: '',
+        city: '',
         monthlyIncome: '',
         gender: '', // male, female
         maternityBenefit: false,
@@ -30,6 +31,7 @@ export default function QuotePage() {
         hospitalizationPerDay: false, // Now effectively "Hospitalization (Spouse/Children)" in family plan
         hospitalizationSelf: false, // New: "Hospitalization for you"
         premiumProtectionSpouse: false, // New: "Premium Protection (Spouse)"
+        inflationProtection: false, // New: "Inflation Protection Rider"
         occupation: '',
 
         globalCover: false,
@@ -236,17 +238,42 @@ export default function QuotePage() {
 
                                 {/* Address Logic */}
                                 <div className="pt-2">
-                                    <div className="mt-3 animate-fade-in">
-                                        <label className="block text-sm font-semibold mb-1">Current Address</label>
-                                        <textarea
-                                            name="address"
-                                            required
-                                            rows={3}
-                                            value={formData.address}
-                                            onChange={handleInputChange}
-                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8CC63F] outline-none transition"
-                                            placeholder="Type your current address here..."
-                                        ></textarea>
+                                    <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-4 animate-fade-in">
+                                        <div className="md:col-span-2">
+                                            <label className="block text-sm font-semibold mb-1">Address Line 1</label>
+                                            <input
+                                                type="text"
+                                                name="addressLine1"
+                                                required
+                                                value={formData.addressLine1}
+                                                onChange={handleInputChange}
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8CC63F] outline-none transition"
+                                                placeholder="Street Address, P.O. box, etc."
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-semibold mb-1">Address Line 2 (Optional)</label>
+                                            <input
+                                                type="text"
+                                                name="addressLine2"
+                                                value={formData.addressLine2}
+                                                onChange={handleInputChange}
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8CC63F] outline-none transition"
+                                                placeholder="Apartment, suite, etc."
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-semibold mb-1">City</label>
+                                            <input
+                                                type="text"
+                                                name="city"
+                                                required
+                                                value={formData.city}
+                                                onChange={handleInputChange}
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8CC63F] outline-none transition"
+                                                placeholder="City / Town"
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -255,20 +282,19 @@ export default function QuotePage() {
                             {/* Civil Status */}
                             <div className="space-y-4">
                                 <h3 className="text-lg font-medium text-[#4E1686] border-b pb-2 border-purple-100">Civil Status</h3>
-                                <div className="flex flex-wrap gap-4">
-                                    {['single', 'married', 'separated', 'divorced', 'widowed'].map((status) => (
-                                        <label key={status} className="flex items-center cursor-pointer">
-                                            <input
-                                                type="radio"
-                                                name="civilStatus"
-                                                value={status}
-                                                checked={formData.civilStatus === status}
-                                                onChange={() => handleCivilStatusChange(status)}
-                                                className="h-4 w-4 text-[#4E1686] focus:ring-[#4E1686] border-gray-300"
-                                            />
-                                            <span className="ml-2 capitalize text-gray-700">{status}</span>
-                                        </label>
-                                    ))}
+                                <div className="mt-2 text-[#4E1686]">
+                                    <select
+                                        name="civilStatus"
+                                        value={formData.civilStatus}
+                                        onChange={(e) => handleCivilStatusChange(e.target.value)}
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8CC63F] outline-none transition bg-white"
+                                    >
+                                        <option value="single">Single</option>
+                                        <option value="married">Married</option>
+                                        <option value="separated">Separated</option>
+                                        <option value="divorced">Divorced</option>
+                                        <option value="widowed">Widowed</option>
+                                    </select>
                                 </div>
 
                                 {/* Dependent Details for Non-Single */}
@@ -525,6 +551,22 @@ export default function QuotePage() {
                                                     <div>
                                                         <span className="block font-bold text-[#002B5C]">Maternity Benefit</span>
                                                         <span className="text-sm text-gray-500">Comprehensive coverage for pregnancy and childbirth related expenses.</span>
+                                                    </div>
+                                                </label>
+                                            )}
+
+                                            {/* Inflation Protection Rider (Non-Married) */}
+                                            {formData.civilStatus !== 'married' && (
+                                                <label className="flex items-start gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-purple-50 transition-colors border border-transparent hover:border-purple-200">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={formData.inflationProtection}
+                                                        onChange={(e) => setFormData({ ...formData, inflationProtection: e.target.checked })}
+                                                        className="mt-1 w-5 h-5 text-[#4E1686] rounded border-gray-300 focus:ring-[#4E1686]"
+                                                    />
+                                                    <div>
+                                                        <span className="block font-bold text-[#002B5C]">Inflation Protection Rider</span>
+                                                        <span className="text-sm text-gray-500">Automatically increases your cover annually to fight inflation.</span>
                                                     </div>
                                                 </label>
                                             )}

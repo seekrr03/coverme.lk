@@ -68,7 +68,7 @@ Personal Details:
 - NIC: ${formData.nic}
 - Phone: ${formData.phone}
 - Email: ${formData.email}
-- Address: ${formData.address}
+- Address: ${formData.addressLine1}${formData.addressLine2 ? ', ' + formData.addressLine2 : ''}, ${formData.city}
 - Civil Status: ${formData.civilStatus}
 
 Dependent Details:
