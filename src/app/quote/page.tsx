@@ -668,78 +668,61 @@ export default function QuotePage() {
                                                 )}
                                             </div>
 
-                                            {/* 2. Critical Illness */}
-                                            <div className="p-4 bg-purple-50/50 rounded-xl hover:bg-purple-50 transition-colors border border-purple-100/50 hover:border-purple-200">
-                                                <label className="flex items-start gap-3 cursor-pointer">
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={formData.criticalIllness}
-                                                        onChange={(e) => setFormData({
-                                                            ...formData,
-                                                            criticalIllness: e.target.checked,
-                                                            ...(e.target.checked ? {} : { criticalIllnessSpouse: false })
-                                                        })}
-                                                        className="mt-1 w-5 h-5 text-[#4E1686] rounded border-gray-300 focus:ring-[#4E1686]"
-                                                    />
-                                                    <div>
-                                                        <span className="block font-bold text-[#002B5C]">Critical Illness Benefit (For You)</span>
-                                                        <span className="text-sm text-gray-500">Covers 36 major illnesses including Heart Attack, Cancer, Stroke & Kidney Failure.</span>
-                                                    </div>
-                                                </label>
-                                                {formData.criticalIllness && (
-                                                    <div className="mt-3 ml-8 animate-fade-in pl-4 border-l-2 border-purple-200">
-                                                        {/* 2b. Critical Illness (Spouse) Nested */}
-                                                        <label className="flex items-start gap-3 cursor-pointer">
-                                                            <input
-                                                                type="checkbox"
-                                                                checked={formData.criticalIllnessSpouse}
-                                                                onChange={(e) => setFormData({ ...formData, criticalIllnessSpouse: e.target.checked })}
-                                                                className="mt-1 w-5 h-5 text-[#4E1686] rounded border-gray-300 focus:ring-[#4E1686]"
-                                                            />
-                                                            <div>
-                                                                <span className="block font-bold text-[#002B5C]">Add Critical Illness Benefit (For Spouse)</span>
-                                                                <span className="text-sm text-gray-500">Extend coverage to your spouse.</span>
-                                                            </div>
-                                                        </label>
-                                                    </div>
-                                                )}
-                                            </div>
+                                            {/* 2. Critical Illness (You) */}
+                                            <label className="flex items-start gap-3 p-4 bg-purple-50/50 rounded-xl cursor-pointer hover:bg-purple-50 transition-colors border border-purple-100/50 hover:border-purple-200">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={formData.criticalIllness}
+                                                    onChange={(e) => setFormData({ ...formData, criticalIllness: e.target.checked })}
+                                                    className="mt-1 w-5 h-5 text-[#4E1686] rounded border-gray-300 focus:ring-[#4E1686]"
+                                                />
+                                                <div>
+                                                    <span className="block font-bold text-[#002B5C]">Critical Illness Benefit (For You)</span>
+                                                    <span className="text-sm text-gray-500">Covers 36 major illnesses including Heart Attack, Cancer, Stroke & Kidney Failure.</span>
+                                                </div>
+                                            </label>
 
-                                            {/* 3. Hospitalization */}
-                                            <div className="p-4 bg-purple-50/50 rounded-xl hover:bg-purple-50 transition-colors border border-purple-100/50 hover:border-purple-200">
-                                                <label className="flex items-start gap-3 cursor-pointer">
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={formData.hospitalizationSelf}
-                                                        onChange={(e) => setFormData({
-                                                            ...formData,
-                                                            hospitalizationSelf: e.target.checked,
-                                                            ...(e.target.checked ? {} : { hospitalizationPerDay: false })
-                                                        })}
-                                                        className="mt-1 w-5 h-5 text-[#4E1686] rounded border-gray-300 focus:ring-[#4E1686]"
-                                                    />
-                                                    <div>
-                                                        <span className="block font-bold text-[#002B5C]">Hospitalization Benefits (For you)</span>
-                                                        <span className="text-sm text-gray-500">Daily benefit for income loss, medical bills & transport (Self).</span>
-                                                    </div>
-                                                </label>
-                                                {formData.hospitalizationSelf && (
-                                                    <div className="mt-3 ml-8 animate-fade-in pl-4 border-l-2 border-purple-200">
-                                                        <label className="flex items-start gap-3 cursor-pointer">
-                                                            <input
-                                                                type="checkbox"
-                                                                checked={formData.hospitalizationPerDay}
-                                                                onChange={(e) => setFormData({ ...formData, hospitalizationPerDay: e.target.checked })}
-                                                                className="mt-1 w-5 h-5 text-[#4E1686] rounded border-gray-300 focus:ring-[#4E1686]"
-                                                            />
-                                                            <div>
-                                                                <span className="block font-bold text-[#002B5C]">Add Hospitalization Benefits (For Spouse/Children)</span>
-                                                                <span className="text-sm text-gray-500">Extend daily benefit to spouse/children.</span>
-                                                            </div>
-                                                        </label>
-                                                    </div>
-                                                )}
-                                            </div>
+                                            {/* 2b. Critical Illness (Spouse) */}
+                                            <label className="flex items-start gap-3 p-4 bg-purple-50/50 rounded-xl cursor-pointer hover:bg-purple-50 transition-colors border border-purple-100/50 hover:border-purple-200">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={formData.criticalIllnessSpouse}
+                                                    onChange={(e) => setFormData({ ...formData, criticalIllnessSpouse: e.target.checked })}
+                                                    className="mt-1 w-5 h-5 text-[#4E1686] rounded border-gray-300 focus:ring-[#4E1686]"
+                                                />
+                                                <div>
+                                                    <span className="block font-bold text-[#002B5C]">Critical Illness Benefit (For Spouse)</span>
+                                                    <span className="text-sm text-gray-500">Extend coverage to your spouse.</span>
+                                                </div>
+                                            </label>
+
+                                            {/* 3. Hospitalization (You) */}
+                                            <label className="flex items-start gap-3 p-4 bg-purple-50/50 rounded-xl cursor-pointer hover:bg-purple-50 transition-colors border border-purple-100/50 hover:border-purple-200">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={formData.hospitalizationSelf}
+                                                    onChange={(e) => setFormData({ ...formData, hospitalizationSelf: e.target.checked })}
+                                                    className="mt-1 w-5 h-5 text-[#4E1686] rounded border-gray-300 focus:ring-[#4E1686]"
+                                                />
+                                                <div>
+                                                    <span className="block font-bold text-[#002B5C]">Hospitalization Benefits (For you)</span>
+                                                    <span className="text-sm text-gray-500">Daily benefit for income loss, medical bills & transport (Self).</span>
+                                                </div>
+                                            </label>
+
+                                            {/* 4. Hospitalization (Spouse/Children) */}
+                                            <label className="flex items-start gap-3 p-4 bg-purple-50/50 rounded-xl cursor-pointer hover:bg-purple-50 transition-colors border border-purple-100/50 hover:border-purple-200">
+                                                <input
+                                                    type="checkbox"
+                                                    checked={formData.hospitalizationPerDay}
+                                                    onChange={(e) => setFormData({ ...formData, hospitalizationPerDay: e.target.checked })}
+                                                    className="mt-1 w-5 h-5 text-[#4E1686] rounded border-gray-300 focus:ring-[#4E1686]"
+                                                />
+                                                <div>
+                                                    <span className="block font-bold text-[#002B5C]">Hospitalization Benefits (For Spouse/Children)</span>
+                                                    <span className="text-sm text-gray-500">Extend daily benefit to spouse/children.</span>
+                                                </div>
+                                            </label>
 
                                             {/* 5. Family Income */}
                                             <label className="flex items-start gap-3 p-4 bg-purple-50/50 rounded-xl cursor-pointer hover:bg-purple-50 transition-colors border border-purple-100/50 hover:border-purple-200">
