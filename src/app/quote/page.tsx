@@ -137,6 +137,21 @@ export default function QuotePage() {
         });
     };
 
+    const getGenderFromNIC = (nic: string) => {
+        const nicStr = nic.toUpperCase().trim();
+        let days = 0;
+        if (nicStr.length === 10 && (nicStr.endsWith('V') || nicStr.endsWith('X'))) {
+            days = parseInt(nicStr.substring(2, 5), 10) || 0;
+        } else if (nicStr.length === 12) {
+            days = parseInt(nicStr.substring(4, 7), 10) || 0;
+        }
+        if (days > 500 && days <= 866) return 'female';
+        if (days > 0 && days <= 366) return 'male';
+        return '';
+    };
+
+    const derivedGender = getGenderFromNIC(formData.nic);
+
 
     return (
         <div className="min-h-screen font-sans bg-gray-50 text-[#002B5C]">
@@ -215,17 +230,6 @@ export default function QuotePage() {
                                             placeholder="your@email.com"
                                         />
                                     </div>
-                                    <div>
-                                        <label className="block text-sm font-semibold mb-1">Date of Birth</label>
-                                        <input
-                                            type="date"
-                                            name="dob"
-                                            required
-                                            value={formData.dob}
-                                            onChange={handleInputChange}
-                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8CC63F] outline-none transition"
-                                        />
-                                    </div>
                                 </div>
 
 
@@ -243,26 +247,6 @@ export default function QuotePage() {
                                             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8CC63F] outline-none transition"
                                             placeholder="Type your current address here..."
                                         ></textarea>
-                                    </div>
-
-                                    <div className="mt-5 animate-fade-in">
-                                        <label className="block text-sm font-semibold mb-2">Gender</label>
-                                        <div className="flex gap-6">
-                                            {['male', 'female'].map((g) => (
-                                                <label key={g} className="flex items-center cursor-pointer">
-                                                    <input
-                                                        type="radio"
-                                                        name="gender"
-                                                        value={g}
-                                                        required
-                                                        checked={formData.gender === g}
-                                                        onChange={handleInputChange}
-                                                        className="h-4 w-4 text-[#4E1686] focus:ring-[#4E1686] border-gray-300"
-                                                    />
-                                                    <span className="ml-2 capitalize text-gray-700">{g}</span>
-                                                </label>
-                                            ))}
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -530,7 +514,7 @@ export default function QuotePage() {
                                             </label>
 
                                             {/* Maternity Benefit (Female Only) */}
-                                            {formData.gender === 'female' && (
+                                            {derivedGender === 'female' && (
                                                 <label className="flex items-start gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-purple-50 transition-colors border border-transparent hover:border-purple-200">
                                                     <input
                                                         type="checkbox"
@@ -748,7 +732,8 @@ export default function QuotePage() {
                                             className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-[#8CC63F] transition bg-white"
                                         >
                                             <option value="" disabled>Select Income Range</option>
-                                            <option value="5000-80000">5,000 - 80,000</option>
+                                            <option value="<50000">Below 50,000</option>
+                                            <option value="50000-80000">50,000 - 80,000</option>
                                             <option value="80000-100000">80,000 - 100,000</option>
                                             <option value="100000+">100,000+</option>
                                         </select>

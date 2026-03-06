@@ -5,12 +5,42 @@ export async function POST(request: Request) {
     try {
         const formData = await request.json();
 
-        // Calculate Age specifically for year 2026
-        let age = 'N/A';
-        if (formData.dob) {
-            const birthDate = new Date(formData.dob);
-            // Simple year difference for 2026
-            age = (2026 - birthDate.getFullYear()).toString();
+        // Extract DOB and Gender from NIC
+        let extractedDob = 'Not specified';
+        let extractedGender = 'Not specified';
+        let ageFor2026 = 'N/A';
+
+        if (formData.nic) {
+            let year = 0;
+            let days = 0;
+            const nicStr = formData.nic.toString().toUpperCase().trim();
+
+            if (nicStr.length === 10 && (nicStr.endsWith('V') || nicStr.endsWith('X'))) {
+                year = 1900 + parseInt(nicStr.substring(0, 2), 10);
+                days = parseInt(nicStr.substring(2, 5), 10);
+            } else if (nicStr.length === 12) {
+                year = parseInt(nicStr.substring(0, 4), 10);
+                days = parseInt(nicStr.substring(4, 7), 10);
+            }
+
+            if (year > 0 && days > 0) {
+                if (days > 500) {
+                    extractedGender = 'Female';
+                    days -= 500;
+                } else {
+                    extractedGender = 'Male';
+                }
+
+                if (days >= 1 && days <= 366) {
+                    const tempDate = new Date(2000, 0); // Use leap year 2000 for SL NIC logic
+                    tempDate.setDate(days);
+                    const month = tempDate.toLocaleString('default', { month: 'long' });
+                    const date = tempDate.getDate();
+                    extractedDob = `${month} ${date}, ${year}`;
+                    // Calculate Age specifically for year 2026
+                    ageFor2026 = (2026 - year).toString();
+                }
+            }
         }
 
         // Create a transporter using Gmail (or configure for your SMTP provider)
@@ -33,8 +63,8 @@ New Quote Request Details:
 
 Personal Details:
 - Name: ${formData.fullName}
-- Gender: ${formData.gender || 'Not specified'}
-- Date of Birth: ${formData.dob || 'Not specified'} (Age for 2026: ${age} years)
+- Gender: ${extractedGender}
+- Date of Birth: ${extractedDob} (Age for 2026: ${ageFor2026} years)
 - NIC: ${formData.nic}
 - Phone: ${formData.phone}
 - Email: ${formData.email}
