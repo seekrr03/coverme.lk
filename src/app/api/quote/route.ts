@@ -54,7 +54,7 @@ export async function POST(request: Request) {
         });
 
         // Format Selected Benefits List
-        const formatScope = (scope: string) => scope === 'local' ? '(Local Coverage Only)' : '(Worldwide Coverage)';
+        const formatScope = (scope: string) => scope === 'local' ? '(Local Coverage (Inc. India, Singapore, Thailand, Malaysia))' : '(Worldwide Coverage)';
 
         const benefitsList = Object.keys(formData)
             .filter(k => formData[k] === true && !['familyPlan', 'globalHospital', 'criticalIllness', 'criticalIllnessSpouse', 'hospitalizationSelf', 'hospitalizationPerDay'].includes(k));

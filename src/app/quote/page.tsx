@@ -524,7 +524,7 @@ export default function QuotePage() {
                                                             onChange={(e) => setFormData({ ...formData, hospitalCoverScope: e.target.value })}
                                                         >
                                                             <option value="worldwide">Worldwide Coverage (Exclude US/ Canada)</option>
-                                                            <option value="local">Local Coverage Only</option>
+                                                            <option value="local">Local Coverage (Inc. India, Singapore, Thailand, Malaysia)</option>
                                                         </select>
                                                     </div>
                                                 )}
@@ -662,7 +662,7 @@ export default function QuotePage() {
                                                             onChange={(e) => setFormData({ ...formData, hospitalCoverScope: e.target.value })}
                                                         >
                                                             <option value="worldwide">Worldwide Coverage (Exclude US/ Canada)</option>
-                                                            <option value="local">Local Coverage Only</option>
+                                                            <option value="local">Local Coverage (Inc. India, Singapore, Thailand, Malaysia)</option>
                                                         </select>
                                                     </div>
                                                 )}
