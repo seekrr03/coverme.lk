@@ -53,6 +53,18 @@ export async function POST(request: Request) {
             },
         });
 
+        // Format Selected Benefits List
+        const formatScope = (scope: string) => scope === 'local' ? '(Local Coverage Only)' : '(Worldwide Coverage)';
+
+        const benefitsList = Object.keys(formData)
+            .filter(k => formData[k] === true && !['familyPlan', 'globalHospital', 'criticalIllness', 'criticalIllnessSpouse', 'hospitalizationSelf', 'hospitalizationPerDay'].includes(k));
+
+        if (formData.globalHospital) benefitsList.push(`Hospital Cover ${formatScope(formData.hospitalCoverScope)}`);
+        if (formData.criticalIllness) benefitsList.push(`Critical Illness (You) ${formatScope(formData.criticalIllnessScope)}`);
+        if (formData.criticalIllnessSpouse) benefitsList.push(`Critical Illness (Spouse) ${formatScope(formData.criticalIllnessSpouseScope)}`);
+        if (formData.hospitalizationSelf) benefitsList.push(`Hospitalization (You) ${formatScope(formData.hospitalizationSelfScope)}`);
+        if (formData.hospitalizationPerDay) benefitsList.push(`Hospitalization (Spouse/Children) ${formatScope(formData.hospitalizationPerDayScope)}`);
+
         // Format the email content
         const mailOptions = {
             from: process.env.EMAIL_USER || 'nimthakakannangara@gmail.com',
@@ -87,7 +99,7 @@ Financial & Professional:
 - Monthly Gross Income: ${formData.monthlyIncome || 'Not specified'}
 
 Selected Benefits:
-${Object.keys(formData).filter(k => formData[k] === true && !['familyPlan', 'globalHospital'].includes(k)).concat(formData.globalHospital ? [`globalHospital (${formData.hospitalCoverScope === 'local' ? 'Local Coverage Only' : 'Worldwide'})`] : []).join(', ')}
+${benefitsList.length > 0 ? benefitsList.join(',\n') : 'None'}
 
 Additional Notes:
 ${formData.additionalNotes}

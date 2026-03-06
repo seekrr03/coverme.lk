@@ -33,6 +33,10 @@ export default function QuotePage() {
         premiumProtectionSpouse: false, // New: "Premium Protection (Spouse)"
         inflationProtection: false, // New: "Inflation Protection Rider"
         hospitalCoverScope: 'worldwide',
+        criticalIllnessScope: 'worldwide',
+        criticalIllnessSpouseScope: 'worldwide',
+        hospitalizationSelfScope: 'worldwide',
+        hospitalizationPerDayScope: 'worldwide',
         occupation: '',
 
         globalCover: false,
@@ -527,32 +531,60 @@ export default function QuotePage() {
                                             </div>
 
                                             {/* Critical Illness (Self) */}
-                                            <label className="flex items-start gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-purple-50 transition-colors border border-transparent hover:border-purple-200">
-                                                <input
-                                                    type="checkbox"
-                                                    checked={formData.criticalIllness}
-                                                    onChange={(e) => setFormData({ ...formData, criticalIllness: e.target.checked })}
-                                                    className="mt-1 w-5 h-5 text-[#4E1686] rounded border-gray-300 focus:ring-[#4E1686]"
-                                                />
-                                                <div>
-                                                    <span className="block font-bold text-[#002B5C]">Critical Illness Benefit</span>
-                                                    <span className="text-sm text-gray-500">Covers 36 major illnesses including Heart Attack, Cancer, Stroke & Kidney Failure.</span>
-                                                </div>
-                                            </label>
+                                            <div className="p-4 bg-gray-50 rounded-xl hover:bg-purple-50 transition-colors border border-transparent hover:border-purple-200">
+                                                <label className="flex items-start gap-3 cursor-pointer">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={formData.criticalIllness}
+                                                        onChange={(e) => setFormData({ ...formData, criticalIllness: e.target.checked })}
+                                                        className="mt-1 w-5 h-5 text-[#4E1686] rounded border-gray-300 focus:ring-[#4E1686]"
+                                                    />
+                                                    <div>
+                                                        <span className="block font-bold text-[#002B5C]">Critical Illness Benefit</span>
+                                                        <span className="text-sm text-gray-500">Covers 36 major illnesses including Heart Attack, Cancer, Stroke & Kidney Failure.</span>
+                                                    </div>
+                                                </label>
+                                                {formData.criticalIllness && (
+                                                    <div className="mt-3 ml-8 animate-fade-in">
+                                                        <select
+                                                            className="w-full text-sm border border-gray-300 rounded-lg p-2 text-[#4E1686] bg-white outline-none focus:ring-1 focus:ring-[#4E1686]"
+                                                            value={formData.criticalIllnessScope}
+                                                            onChange={(e) => setFormData({ ...formData, criticalIllnessScope: e.target.value })}
+                                                        >
+                                                            <option value="worldwide">Worldwide Coverage (Exclude US/ Canada)</option>
+                                                            <option value="local">Local Coverage Only</option>
+                                                        </select>
+                                                    </div>
+                                                )}
+                                            </div>
 
                                             {/* Hospitalization (Self) - Renamed from "Hospitalization Benefits" */}
-                                            <label className="flex items-start gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-purple-50 transition-colors border border-transparent hover:border-purple-200">
-                                                <input
-                                                    type="checkbox"
-                                                    checked={formData.hospitalizationSelf}
-                                                    onChange={(e) => setFormData({ ...formData, hospitalizationSelf: e.target.checked })}
-                                                    className="mt-1 w-5 h-5 text-[#4E1686] rounded border-gray-300 focus:ring-[#4E1686]"
-                                                />
-                                                <div>
-                                                    <span className="block font-bold text-[#002B5C]">Hospitalization Benefits</span>
-                                                    <span className="text-sm text-gray-500">Daily benefit for income loss, medical bills & transport.</span>
-                                                </div>
-                                            </label>
+                                            <div className="p-4 bg-gray-50 rounded-xl hover:bg-purple-50 transition-colors border border-transparent hover:border-purple-200">
+                                                <label className="flex items-start gap-3 cursor-pointer">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={formData.hospitalizationSelf}
+                                                        onChange={(e) => setFormData({ ...formData, hospitalizationSelf: e.target.checked })}
+                                                        className="mt-1 w-5 h-5 text-[#4E1686] rounded border-gray-300 focus:ring-[#4E1686]"
+                                                    />
+                                                    <div>
+                                                        <span className="block font-bold text-[#002B5C]">Hospitalization Benefits</span>
+                                                        <span className="text-sm text-gray-500">Daily benefit for income loss, medical bills & transport.</span>
+                                                    </div>
+                                                </label>
+                                                {formData.hospitalizationSelf && (
+                                                    <div className="mt-3 ml-8 animate-fade-in">
+                                                        <select
+                                                            className="w-full text-sm border border-gray-300 rounded-lg p-2 text-[#4E1686] bg-white outline-none focus:ring-1 focus:ring-[#4E1686]"
+                                                            value={formData.hospitalizationSelfScope}
+                                                            onChange={(e) => setFormData({ ...formData, hospitalizationSelfScope: e.target.value })}
+                                                        >
+                                                            <option value="worldwide">Worldwide Coverage (Exclude US/ Canada)</option>
+                                                            <option value="local">Local Coverage Only</option>
+                                                        </select>
+                                                    </div>
+                                                )}
+                                            </div>
 
                                             {/* Maternity Benefit (Female Only) */}
                                             {derivedGender === 'female' && (
@@ -657,7 +689,7 @@ export default function QuotePage() {
                                                             value={formData.hospitalCoverScope}
                                                             onChange={(e) => setFormData({ ...formData, hospitalCoverScope: e.target.value })}
                                                         >
-                                                            <option value="worldwide">Worldwide Coverage</option>
+                                                            <option value="worldwide">Worldwide Coverage (Exclude US/ Canada)</option>
                                                             <option value="local">Local Coverage Only</option>
                                                         </select>
                                                     </div>
@@ -665,60 +697,116 @@ export default function QuotePage() {
                                             </div>
 
                                             {/* 2. Critical Illness (You) */}
-                                            <label className="flex items-start gap-3 p-4 bg-purple-50/50 rounded-xl cursor-pointer hover:bg-purple-50 transition-colors border border-purple-100/50 hover:border-purple-200">
-                                                <input
-                                                    type="checkbox"
-                                                    checked={formData.criticalIllness}
-                                                    onChange={(e) => setFormData({ ...formData, criticalIllness: e.target.checked })}
-                                                    className="mt-1 w-5 h-5 text-[#4E1686] rounded border-gray-300 focus:ring-[#4E1686]"
-                                                />
-                                                <div>
-                                                    <span className="block font-bold text-[#002B5C]">Critical Illness Benefit (For You)</span>
-                                                    <span className="text-sm text-gray-500">Covers 36 major illnesses including Heart Attack, Cancer, Stroke & Kidney Failure.</span>
-                                                </div>
-                                            </label>
+                                            <div className="p-4 bg-purple-50/50 rounded-xl hover:bg-purple-50 transition-colors border border-purple-100/50 hover:border-purple-200">
+                                                <label className="flex items-start gap-3 cursor-pointer">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={formData.criticalIllness}
+                                                        onChange={(e) => setFormData({ ...formData, criticalIllness: e.target.checked })}
+                                                        className="mt-1 w-5 h-5 text-[#4E1686] rounded border-gray-300 focus:ring-[#4E1686]"
+                                                    />
+                                                    <div>
+                                                        <span className="block font-bold text-[#002B5C]">Critical Illness Benefit (For You)</span>
+                                                        <span className="text-sm text-gray-500">Covers 36 major illnesses including Heart Attack, Cancer, Stroke & Kidney Failure.</span>
+                                                    </div>
+                                                </label>
+                                                {formData.criticalIllness && (
+                                                    <div className="mt-3 ml-8 animate-fade-in">
+                                                        <select
+                                                            className="w-full text-sm border border-purple-200 rounded-lg p-2 text-[#4E1686] bg-white outline-none focus:ring-1 focus:ring-[#4E1686]"
+                                                            value={formData.criticalIllnessScope}
+                                                            onChange={(e) => setFormData({ ...formData, criticalIllnessScope: e.target.value })}
+                                                        >
+                                                            <option value="worldwide">Worldwide Coverage (Exclude US/ Canada)</option>
+                                                            <option value="local">Local Coverage Only</option>
+                                                        </select>
+                                                    </div>
+                                                )}
+                                            </div>
 
                                             {/* 2b. Critical Illness (Spouse) */}
-                                            <label className="flex items-start gap-3 p-4 bg-purple-50/50 rounded-xl cursor-pointer hover:bg-purple-50 transition-colors border border-purple-100/50 hover:border-purple-200">
-                                                <input
-                                                    type="checkbox"
-                                                    checked={formData.criticalIllnessSpouse}
-                                                    onChange={(e) => setFormData({ ...formData, criticalIllnessSpouse: e.target.checked })}
-                                                    className="mt-1 w-5 h-5 text-[#4E1686] rounded border-gray-300 focus:ring-[#4E1686]"
-                                                />
-                                                <div>
-                                                    <span className="block font-bold text-[#002B5C]">Critical Illness Benefit (For Spouse)</span>
-                                                    <span className="text-sm text-gray-500">Covers 36 major illnesses including Heart Attack, Cancer, Stroke & Kidney Failure.</span>
-                                                </div>
-                                            </label>
+                                            <div className="p-4 bg-purple-50/50 rounded-xl hover:bg-purple-50 transition-colors border border-purple-100/50 hover:border-purple-200">
+                                                <label className="flex items-start gap-3 cursor-pointer">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={formData.criticalIllnessSpouse}
+                                                        onChange={(e) => setFormData({ ...formData, criticalIllnessSpouse: e.target.checked })}
+                                                        className="mt-1 w-5 h-5 text-[#4E1686] rounded border-gray-300 focus:ring-[#4E1686]"
+                                                    />
+                                                    <div>
+                                                        <span className="block font-bold text-[#002B5C]">Critical Illness Benefit (For Spouse)</span>
+                                                        <span className="text-sm text-gray-500">Covers 36 major illnesses including Heart Attack, Cancer, Stroke & Kidney Failure.</span>
+                                                    </div>
+                                                </label>
+                                                {formData.criticalIllnessSpouse && (
+                                                    <div className="mt-3 ml-8 animate-fade-in">
+                                                        <select
+                                                            className="w-full text-sm border border-purple-200 rounded-lg p-2 text-[#4E1686] bg-white outline-none focus:ring-1 focus:ring-[#4E1686]"
+                                                            value={formData.criticalIllnessSpouseScope}
+                                                            onChange={(e) => setFormData({ ...formData, criticalIllnessSpouseScope: e.target.value })}
+                                                        >
+                                                            <option value="worldwide">Worldwide Coverage (Exclude US/ Canada)</option>
+                                                            <option value="local">Local Coverage Only</option>
+                                                        </select>
+                                                    </div>
+                                                )}
+                                            </div>
 
                                             {/* 3. Hospitalization (You) - NEW */}
-                                            <label className="flex items-start gap-3 p-4 bg-purple-50/50 rounded-xl cursor-pointer hover:bg-purple-50 transition-colors border border-purple-100/50 hover:border-purple-200">
-                                                <input
-                                                    type="checkbox"
-                                                    checked={formData.hospitalizationSelf}
-                                                    onChange={(e) => setFormData({ ...formData, hospitalizationSelf: e.target.checked })}
-                                                    className="mt-1 w-5 h-5 text-[#4E1686] rounded border-gray-300 focus:ring-[#4E1686]"
-                                                />
-                                                <div>
-                                                    <span className="block font-bold text-[#002B5C]">Hospitalization Benefits (For you) </span>
-                                                    <span className="text-sm text-gray-500">Daily benefit for income loss, medical bills & transport (Self).</span>
-                                                </div>
-                                            </label>
+                                            <div className="p-4 bg-purple-50/50 rounded-xl hover:bg-purple-50 transition-colors border border-purple-100/50 hover:border-purple-200">
+                                                <label className="flex items-start gap-3 cursor-pointer">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={formData.hospitalizationSelf}
+                                                        onChange={(e) => setFormData({ ...formData, hospitalizationSelf: e.target.checked })}
+                                                        className="mt-1 w-5 h-5 text-[#4E1686] rounded border-gray-300 focus:ring-[#4E1686]"
+                                                    />
+                                                    <div>
+                                                        <span className="block font-bold text-[#002B5C]">Hospitalization Benefits (For you) </span>
+                                                        <span className="text-sm text-gray-500">Daily benefit for income loss, medical bills & transport (Self).</span>
+                                                    </div>
+                                                </label>
+                                                {formData.hospitalizationSelf && (
+                                                    <div className="mt-3 ml-8 animate-fade-in">
+                                                        <select
+                                                            className="w-full text-sm border border-purple-200 rounded-lg p-2 text-[#4E1686] bg-white outline-none focus:ring-1 focus:ring-[#4E1686]"
+                                                            value={formData.hospitalizationSelfScope}
+                                                            onChange={(e) => setFormData({ ...formData, hospitalizationSelfScope: e.target.value })}
+                                                        >
+                                                            <option value="worldwide">Worldwide Coverage (Exclude US/ Canada)</option>
+                                                            <option value="local">Local Coverage Only</option>
+                                                        </select>
+                                                    </div>
+                                                )}
+                                            </div>
 
                                             {/* 4. Hospitalization (Spouse/Children) */}
-                                            <label className="flex items-start gap-3 p-4 bg-purple-50/50 rounded-xl cursor-pointer hover:bg-purple-50 transition-colors border border-purple-100/50 hover:border-purple-200">
-                                                <input
-                                                    type="checkbox"
-                                                    checked={formData.hospitalizationPerDay}
-                                                    onChange={(e) => setFormData({ ...formData, hospitalizationPerDay: e.target.checked })}
-                                                    className="mt-1 w-5 h-5 text-[#4E1686] rounded border-gray-300 focus:ring-[#4E1686]"
-                                                />
-                                                <div>
-                                                    <span className="block font-bold text-[#002B5C]">Hospitalization Benefits (For Spouse/Children)</span>
-                                                    <span className="text-sm text-gray-500">Daily benefit for income loss, medical bills & transport (Spouse/Children).</span>
-                                                </div>
-                                            </label>
+                                            <div className="p-4 bg-purple-50/50 rounded-xl hover:bg-purple-50 transition-colors border border-purple-100/50 hover:border-purple-200">
+                                                <label className="flex items-start gap-3 cursor-pointer">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={formData.hospitalizationPerDay}
+                                                        onChange={(e) => setFormData({ ...formData, hospitalizationPerDay: e.target.checked })}
+                                                        className="mt-1 w-5 h-5 text-[#4E1686] rounded border-gray-300 focus:ring-[#4E1686]"
+                                                    />
+                                                    <div>
+                                                        <span className="block font-bold text-[#002B5C]">Hospitalization Benefits (For Spouse/Children)</span>
+                                                        <span className="text-sm text-gray-500">Daily benefit for income loss, medical bills & transport (Spouse/Children).</span>
+                                                    </div>
+                                                </label>
+                                                {formData.hospitalizationPerDay && (
+                                                    <div className="mt-3 ml-8 animate-fade-in">
+                                                        <select
+                                                            className="w-full text-sm border border-purple-200 rounded-lg p-2 text-[#4E1686] bg-white outline-none focus:ring-1 focus:ring-[#4E1686]"
+                                                            value={formData.hospitalizationPerDayScope}
+                                                            onChange={(e) => setFormData({ ...formData, hospitalizationPerDayScope: e.target.value })}
+                                                        >
+                                                            <option value="worldwide">Worldwide Coverage (Exclude US/ Canada)</option>
+                                                            <option value="local">Local Coverage Only</option>
+                                                        </select>
+                                                    </div>
+                                                )}
+                                            </div>
 
                                             {/* 5. Family Income */}
                                             <label className="flex items-start gap-3 p-4 bg-purple-50/50 rounded-xl cursor-pointer hover:bg-purple-50 transition-colors border border-purple-100/50 hover:border-purple-200">
