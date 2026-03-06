@@ -142,7 +142,7 @@ export default function QuotePage() {
     const getGenderFromNIC = (nic: string) => {
         const nicStr = nic.toUpperCase().trim();
         let days = 0;
-        if (nicStr.length === 10 && (nicStr.endsWith('V') || nicStr.endsWith('X'))) {
+        if (nicStr.length === 9 || (nicStr.length === 10 && (nicStr.endsWith('V') || nicStr.endsWith('X')))) {
             days = parseInt(nicStr.substring(2, 5), 10) || 0;
         } else if (nicStr.length === 12) {
             days = parseInt(nicStr.substring(4, 7), 10) || 0;

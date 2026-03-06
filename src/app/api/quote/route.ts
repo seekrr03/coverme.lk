@@ -15,7 +15,7 @@ export async function POST(request: Request) {
             let days = 0;
             const nicStr = formData.nic.toString().toUpperCase().trim();
 
-            if (nicStr.length === 10 && (nicStr.endsWith('V') || nicStr.endsWith('X'))) {
+            if (nicStr.length === 9 || (nicStr.length === 10 && (nicStr.endsWith('V') || nicStr.endsWith('X')))) {
                 year = 1900 + parseInt(nicStr.substring(0, 2), 10);
                 days = parseInt(nicStr.substring(2, 5), 10);
             } else if (nicStr.length === 12) {
