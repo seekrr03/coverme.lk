@@ -60,10 +60,10 @@ export async function POST(request: Request) {
             .filter(k => formData[k] === true && !['familyPlan', 'globalHospital', 'criticalIllness', 'criticalIllnessSpouse', 'hospitalizationSelf', 'hospitalizationPerDay'].includes(k));
 
         if (formData.globalHospital) benefitsList.push(`Hospital Cover ${formatScope(formData.hospitalCoverScope)}`);
-        if (formData.criticalIllness) benefitsList.push(`Critical Illness (You) ${formatScope(formData.criticalIllnessScope)}`);
-        if (formData.criticalIllnessSpouse) benefitsList.push(`Critical Illness (Spouse) ${formatScope(formData.criticalIllnessSpouseScope)}`);
-        if (formData.hospitalizationSelf) benefitsList.push(`Hospitalization (You) ${formatScope(formData.hospitalizationSelfScope)}`);
-        if (formData.hospitalizationPerDay) benefitsList.push(`Hospitalization (Spouse/Children) ${formatScope(formData.hospitalizationPerDayScope)}`);
+        if (formData.criticalIllness) benefitsList.push(`Critical Illness (You)`);
+        if (formData.criticalIllnessSpouse) benefitsList.push(`Critical Illness (Spouse)`);
+        if (formData.hospitalizationSelf) benefitsList.push(`Hospitalization (You)`);
+        if (formData.hospitalizationPerDay) benefitsList.push(`Hospitalization (Spouse/Children)`);
 
         // Format the email content
         const mailOptions = {
