@@ -11,7 +11,6 @@ export default function QuotePage() {
         dob: '',
         address: '',
         monthlyIncome: '',
-        otherIncome: '',
         gender: '', // male, female
         maternityBenefit: false,
         civilStatus: 'single', // single, married, separated, divorced, widowed
@@ -31,7 +30,6 @@ export default function QuotePage() {
         hospitalizationPerDay: false, // Now effectively "Hospitalization (Spouse/Children)" in family plan
         hospitalizationSelf: false, // New: "Hospitalization for you"
         premiumProtectionSpouse: false, // New: "Premium Protection (Spouse)"
-        company: '',
         occupation: '',
 
         globalCover: false,
