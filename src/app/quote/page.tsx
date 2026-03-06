@@ -32,6 +32,7 @@ export default function QuotePage() {
         hospitalizationSelf: false, // New: "Hospitalization for you"
         premiumProtectionSpouse: false, // New: "Premium Protection (Spouse)"
         inflationProtection: false, // New: "Inflation Protection Rider"
+        hospitalCoverScope: 'worldwide',
         occupation: '',
 
         globalCover: false,
@@ -140,7 +141,7 @@ export default function QuotePage() {
     };
 
     const getGenderFromNIC = (nic: string) => {
-        const nicStr = nic.toUpperCase().trim();
+        const nicStr = nic.toUpperCase().replace(/[^A-Z0-9]/g, '');
         let days = 0;
         if (nicStr.length === 9 || (nicStr.length === 10 && (nicStr.endsWith('V') || nicStr.endsWith('X')))) {
             days = parseInt(nicStr.substring(2, 5), 10) || 0;
@@ -498,18 +499,32 @@ export default function QuotePage() {
                                             {/* OPTIONAL BENEFITS */}
 
                                             {/* Global Hospital Cover */}
-                                            <label className="flex items-start gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-purple-50 transition-colors border border-transparent hover:border-purple-200">
-                                                <input
-                                                    type="checkbox"
-                                                    checked={formData.globalHospital}
-                                                    onChange={(e) => setFormData({ ...formData, globalHospital: e.target.checked })}
-                                                    className="mt-1 w-5 h-5 text-[#4E1686] rounded border-gray-300 focus:ring-[#4E1686]"
-                                                />
-                                                <div>
-                                                    <span className="block font-bold text-[#002B5C]">Global Hospital Cover</span>
-                                                    <span className="text-sm text-gray-500">Comprehensive medical coverage worldwide.</span>
-                                                </div>
-                                            </label>
+                                            <div className="p-4 bg-gray-50 rounded-xl hover:bg-purple-50 transition-colors border border-transparent hover:border-purple-200">
+                                                <label className="flex items-start gap-3 cursor-pointer">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={formData.globalHospital}
+                                                        onChange={(e) => setFormData({ ...formData, globalHospital: e.target.checked })}
+                                                        className="mt-1 w-5 h-5 text-[#4E1686] rounded border-gray-300 focus:ring-[#4E1686]"
+                                                    />
+                                                    <div>
+                                                        <span className="block font-bold text-[#002B5C]">Hospital Cover</span>
+                                                        <span className="text-sm text-gray-500">Comprehensive medical coverage.</span>
+                                                    </div>
+                                                </label>
+                                                {formData.globalHospital && (
+                                                    <div className="mt-3 ml-8 animate-fade-in">
+                                                        <select
+                                                            className="w-full text-sm border border-gray-300 rounded-lg p-2 text-[#4E1686] bg-white outline-none focus:ring-1 focus:ring-[#4E1686]"
+                                                            value={formData.hospitalCoverScope}
+                                                            onChange={(e) => setFormData({ ...formData, hospitalCoverScope: e.target.value })}
+                                                        >
+                                                            <option value="worldwide">Worldwide Coverage</option>
+                                                            <option value="local">Local Coverage Only</option>
+                                                        </select>
+                                                    </div>
+                                                )}
+                                            </div>
 
                                             {/* Critical Illness (Self) */}
                                             <label className="flex items-start gap-3 p-4 bg-gray-50 rounded-xl cursor-pointer hover:bg-purple-50 transition-colors border border-transparent hover:border-purple-200">
@@ -622,18 +637,32 @@ export default function QuotePage() {
                                             {/* OPTIONAL BENEFITS */}
 
                                             {/* 1. Global Hospital (Family) */}
-                                            <label className="flex items-start gap-3 p-4 bg-purple-50/50 rounded-xl cursor-pointer hover:bg-purple-50 transition-colors border border-purple-100/50 hover:border-purple-200">
-                                                <input
-                                                    type="checkbox"
-                                                    checked={formData.globalHospital}
-                                                    onChange={(e) => setFormData({ ...formData, globalHospital: e.target.checked })}
-                                                    className="mt-1 w-5 h-5 text-[#4E1686] rounded border-gray-300 focus:ring-[#4E1686]"
-                                                />
-                                                <div>
-                                                    <span className="block font-bold text-[#002B5C]">Global Hospital Cover (Entire Family)</span>
-                                                    <span className="text-sm text-gray-500">Comprehensive medical coverage for you, spouse and children.</span>
-                                                </div>
-                                            </label>
+                                            <div className="p-4 bg-purple-50/50 rounded-xl hover:bg-purple-50 transition-colors border border-purple-100/50 hover:border-purple-200">
+                                                <label className="flex items-start gap-3 cursor-pointer">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={formData.globalHospital}
+                                                        onChange={(e) => setFormData({ ...formData, globalHospital: e.target.checked })}
+                                                        className="mt-1 w-5 h-5 text-[#4E1686] rounded border-gray-300 focus:ring-[#4E1686]"
+                                                    />
+                                                    <div>
+                                                        <span className="block font-bold text-[#002B5C]">Hospital Cover (Entire Family)</span>
+                                                        <span className="text-sm text-gray-500">Comprehensive medical coverage for you, spouse and children.</span>
+                                                    </div>
+                                                </label>
+                                                {formData.globalHospital && (
+                                                    <div className="mt-3 ml-8 animate-fade-in">
+                                                        <select
+                                                            className="w-full text-sm border border-purple-200 rounded-lg p-2 text-[#4E1686] bg-white outline-none focus:ring-1 focus:ring-[#4E1686]"
+                                                            value={formData.hospitalCoverScope}
+                                                            onChange={(e) => setFormData({ ...formData, hospitalCoverScope: e.target.value })}
+                                                        >
+                                                            <option value="worldwide">Worldwide Coverage</option>
+                                                            <option value="local">Local Coverage Only</option>
+                                                        </select>
+                                                    </div>
+                                                )}
+                                            </div>
 
                                             {/* 2. Critical Illness (You) */}
                                             <label className="flex items-start gap-3 p-4 bg-purple-50/50 rounded-xl cursor-pointer hover:bg-purple-50 transition-colors border border-purple-100/50 hover:border-purple-200">

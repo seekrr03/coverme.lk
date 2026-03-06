@@ -13,7 +13,7 @@ export async function POST(request: Request) {
         if (formData.nic) {
             let year = 0;
             let days = 0;
-            const nicStr = formData.nic.toString().toUpperCase().trim();
+            const nicStr = formData.nic.toString().toUpperCase().replace(/[^A-Z0-9]/g, '');
 
             if (nicStr.length === 9 || (nicStr.length === 10 && (nicStr.endsWith('V') || nicStr.endsWith('X')))) {
                 year = 1900 + parseInt(nicStr.substring(0, 2), 10);
@@ -87,7 +87,7 @@ Financial & Professional:
 - Monthly Gross Income: ${formData.monthlyIncome || 'Not specified'}
 
 Selected Benefits:
-${Object.keys(formData).filter(k => formData[k] === true && !['familyPlan'].includes(k)).join(', ')}
+${Object.keys(formData).filter(k => formData[k] === true && !['familyPlan', 'globalHospital'].includes(k)).concat(formData.globalHospital ? [`globalHospital (${formData.hospitalCoverScope === 'local' ? 'Local Coverage Only' : 'Worldwide'})`] : []).join(', ')}
 
 Additional Notes:
 ${formData.additionalNotes}
