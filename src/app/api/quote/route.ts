@@ -75,7 +75,7 @@ New Quote Request Details:
 
 Personal Details:
 - Name: ${formData.fullName}
-- Gender: ${extractedGender}
+${formData.companyName ? `- Company: ${formData.companyName}\n` : ''}- Gender: ${extractedGender}
 - Date of Birth: ${extractedDob} (Age for 2026: ${ageFor2026} years)
 - NIC: ${formData.nic}
 - Phone: ${formData.phone}

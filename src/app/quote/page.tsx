@@ -7,6 +7,7 @@ export default function QuotePage() {
         fullName: '',
         phone: '',
         email: '',
+        companyName: '',
         nic: '',
         addressLine1: '',
         addressLine2: '',
@@ -277,6 +278,17 @@ export default function QuotePage() {
                                                 onChange={handleInputChange}
                                                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#8CC63F] outline-none transition"
                                                 placeholder="City / Town"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm font-semibold mb-1">Company Name (Optional)</label>
+                                            <input
+                                                type="text"
+                                                name="companyName"
+                                                value={formData.companyName}
+                                                onChange={handleInputChange}
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-[#8CC63F] transition"
+                                                placeholder="Your Company Name"
                                             />
                                         </div>
                                     </div>
