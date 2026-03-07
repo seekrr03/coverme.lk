@@ -280,17 +280,6 @@ export default function QuotePage() {
                                                 placeholder="City / Town"
                                             />
                                         </div>
-                                        <div>
-                                            <label className="block text-sm font-semibold mb-1">Company Name (Optional)</label>
-                                            <input
-                                                type="text"
-                                                name="companyName"
-                                                value={formData.companyName}
-                                                onChange={handleInputChange}
-                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-[#8CC63F] transition"
-                                                placeholder="Your Company Name"
-                                            />
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -824,6 +813,17 @@ export default function QuotePage() {
                                             <option value="80000-100000">80,000 - 100,000</option>
                                             <option value="100000+">100,000+</option>
                                         </select>
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-semibold mb-1">Company Name (Optional)</label>
+                                        <input
+                                            type="text"
+                                            name="companyName"
+                                            value={formData.companyName}
+                                            onChange={handleInputChange}
+                                            className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-[#8CC63F] transition"
+                                            placeholder="Your Company Name"
+                                        />
                                     </div>
                                 </div>
                             </div>

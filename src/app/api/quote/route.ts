@@ -75,7 +75,7 @@ New Quote Request Details:
 
 Personal Details:
 - Name: ${formData.fullName}
-${formData.companyName ? `- Company: ${formData.companyName}\n` : ''}- Gender: ${extractedGender}
+- Gender: ${extractedGender}
 - Date of Birth: ${extractedDob} (Age for 2026: ${ageFor2026} years)
 - NIC: ${formData.nic}
 - Phone: ${formData.phone}
@@ -96,7 +96,7 @@ Spouse Coverage Details:
 
 Financial & Professional:
 - Occupation: ${formData.occupation || 'Not specified'}
-- Monthly Gross Income: ${formData.monthlyIncome || 'Not specified'}
+${formData.companyName ? `- Company: ${formData.companyName}\n` : ''}- Monthly Gross Income: ${formData.monthlyIncome || 'Not specified'}
 
 Selected Benefits:
 ${benefitsList.length > 0 ? benefitsList.join(',\n') : 'None'}
