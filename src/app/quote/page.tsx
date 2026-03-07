@@ -2,6 +2,37 @@
 
 import { useState, ChangeEvent, FormEvent } from 'react';
 
+const HospitalBenefitsList = () => (
+    <div className="mt-4 p-4 bg-white/60 rounded-lg border border-purple-100 text-sm animate-fade-in text-left">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+                <h4 className="font-bold text-[#002B5C] mb-2 flex items-center gap-2 border-b border-purple-100 pb-2">
+                    <svg className="w-4 h-4 text-[#8CC63F]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    Main Benefits
+                </h4>
+                <ul className="space-y-2 text-gray-600 text-xs mt-3">
+                    <li className="flex gap-2 items-start"><span className="text-[#8CC63F] mt-0.5">•</span> <span><strong>Inpatient Cover:</strong> Hospital Room Charges including ICU</span></li>
+                    <li className="flex gap-2 items-start"><span className="text-[#8CC63F] mt-0.5">•</span> <span><strong>Surgical Cover:</strong> Surgeon’s, Anesthetist’s & Operating Theatre Charges</span></li>
+                    <li className="flex gap-2 items-start"><span className="text-[#8CC63F] mt-0.5">•</span> <span><strong>Miscellaneous Expenses:</strong> Consultancy Fee + Medicine, Tests & Equipment Charges</span></li>
+                </ul>
+            </div>
+            <div>
+                <h4 className="font-bold text-[#002B5C] mb-2 flex items-center gap-2 border-b border-purple-100 pb-2">
+                    <svg className="w-4 h-4 text-[#4E1686]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
+                    Free Included Benefits
+                </h4>
+                <ul className="space-y-2 text-gray-600 text-xs mt-3">
+                    <li className="flex gap-2 items-start"><span className="text-[#4E1686] mt-0.5">✦</span> <span><strong>Optical Care:</strong> Eye Examination Fees, Spectacle Frames, Corrective Lenses (up to LKR 50,000 / 2 years)</span></li>
+                    <li className="flex gap-2 items-start"><span className="text-[#4E1686] mt-0.5">✦</span> <span><strong>Dental Care:</strong> Dental Treatments, Consultations & Surgeries (up to LKR 50,000 / Year)</span></li>
+                    <li className="flex gap-2 items-start"><span className="text-[#4E1686] mt-0.5">✦</span> <span><strong>Wellbeing Benefit:</strong> Health Checks, Test & Examinations (up to LKR 50,000 / 2 years)</span></li>
+                    <li className="flex gap-2 items-start"><span className="text-[#4E1686] mt-0.5">✦</span> <span><strong>Pharmacy Benefit:</strong> Outpatient Pharmacy Medicine (up to LKR 25,000 / Year)</span></li>
+                    <li className="flex gap-2 items-start"><span className="text-[#4E1686] mt-0.5">✦</span> <span><strong>Maternity Expenses:</strong> Child Delivery & Miscarriages (up to LKR 300,000 / Year up to 2 deliveries)</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+);
+
 export default function QuotePage() {
     const [formData, setFormData] = useState({
         fullName: '',
@@ -527,6 +558,7 @@ export default function QuotePage() {
                                                             <option value="worldwide">Worldwide Coverage (Exclude US/ Canada)</option>
                                                             <option value="local">Local Coverage (Inc. India, Singapore, Thailand, Malaysia)</option>
                                                         </select>
+                                                        <HospitalBenefitsList />
                                                     </div>
                                                 )}
                                             </div>
@@ -665,6 +697,7 @@ export default function QuotePage() {
                                                             <option value="worldwide">Worldwide Coverage (Exclude US/ Canada)</option>
                                                             <option value="local">Local Coverage (Inc. India, Singapore, Thailand, Malaysia)</option>
                                                         </select>
+                                                        <HospitalBenefitsList />
                                                     </div>
                                                 )}
                                             </div>
