@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   description: "Secure your future with coverme.lk's personalized health and life insurance plans.",
   icons: {
     icon: "/icon.png",
+    apple: "/apple-icon.png",
   },
 };
 
