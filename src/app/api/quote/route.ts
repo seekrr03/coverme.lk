@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
+import { query } from '@/lib/db';
 
 export async function POST(request: Request) {
     try {
@@ -106,6 +107,40 @@ Additional Notes:
 ${formData.additionalNotes}
             `,
         };
+
+        // Save to Supabase Leads database
+        try {
+            await query(`
+                INSERT INTO leads (
+                    full_name, phone, email, address_line1, address_line2, city, 
+                    civil_status, spouse_name, spouse_dob, spouse_nic, spouse_occupation, 
+                    child_count, children_details, family_plan, occupation, 
+                    monthly_income, selected_benefits, additional_notes
+                ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
+            `, [
+                formData.fullName,
+                formData.phone,
+                formData.email || null,
+                formData.addressLine1 || null,
+                formData.addressLine2 || null,
+                formData.city || null,
+                formData.civilStatus || null,
+                formData.spouseName || null,
+                formData.spouseDob || null,
+                formData.spouseNic || null,
+                formData.spouseOccupation || null,
+                formData.childCount ? parseInt(formData.childCount, 10) : 0,
+                JSON.stringify(formData.children || []),
+                formData.familyPlan || false,
+                formData.occupation || null,
+                formData.monthlyIncome || null,
+                JSON.stringify(benefitsList),
+                formData.additionalNotes || null
+            ]);
+            console.log('Lead saved successfully to Supabase database!');
+        } catch (dbError) {
+            console.error('Error saving lead to Supabase database:', dbError);
+        }
 
         // Send the email
         await transporter.sendMail(mailOptions);
