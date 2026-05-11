@@ -91,7 +91,8 @@ Family Plan Coverage: ${formData.familyPlan ? 'Yes' : 'No'}
 ${formData.familyPlan ? `
 Spouse Coverage Details:
 - Name: ${formData.spouseName}
-- NIC: ${formData.spouseNic}
+- DOB: ${formData.spouseDob}
+- NIC: ${formData.spouseNic || 'Not specified'}
 ` : ''}
 
 Financial & Professional:

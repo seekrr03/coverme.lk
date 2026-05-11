@@ -95,6 +95,7 @@ export default function QuotePage() {
             civilStatus: status,
             // Reset dependent fields if not married
             spouseName: isMarried ? prev.spouseName : '',
+            spouseDob: isMarried ? prev.spouseDob : '',
             spouseNic: isMarried ? prev.spouseNic : '',
             spouseOccupation: isMarried ? prev.spouseOccupation : '',
             familyPlan: isMarried ? prev.familyPlan : false,
@@ -441,7 +442,7 @@ export default function QuotePage() {
                                                 {formData.familyPlan && (
                                                     <div className="space-y-4 animate-fade-in mt-4 border-l-2 border-purple-200 pl-4 py-2">
                                                         <p className="text-sm text-gray-500 mb-2">Since you're choosing a family plan, please provide spouse details for coverage.</p>
-                                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                                             <div>
                                                                 <label className="block text-sm font-semibold mb-1">Spouse Full Name</label>
                                                                 <input
@@ -455,15 +456,25 @@ export default function QuotePage() {
                                                                 />
                                                             </div>
                                                             <div>
-                                                                <label className="block text-sm font-semibold mb-1">Spouse NIC</label>
+                                                                <label className="block text-sm font-semibold mb-1">Spouse Date of Birth</label>
+                                                                <input
+                                                                    type="date"
+                                                                    name="spouseDob"
+                                                                    required
+                                                                    value={formData.spouseDob}
+                                                                    onChange={handleInputChange}
+                                                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none bg-white focus:ring-2 focus:ring-[#8CC63F]"
+                                                                />
+                                                            </div>
+                                                            <div>
+                                                                <label className="block text-sm font-semibold mb-1">Spouse NIC (Optional)</label>
                                                                 <input
                                                                     type="text"
                                                                     name="spouseNic"
-                                                                    required
                                                                     value={formData.spouseNic}
                                                                     onChange={handleInputChange}
                                                                     className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none bg-white focus:ring-2 focus:ring-[#8CC63F]"
-                                                                    placeholder="Spouse NIC"
+                                                                    placeholder="Spouse NIC (Optional)"
                                                                 />
                                                             </div>
                                                         </div>
