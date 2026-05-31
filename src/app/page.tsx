@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { pixelEvents } from '@/lib/pixel';
 import Image from 'next/image';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import FeaturesSection from '@/components/FeaturesSection';
@@ -38,7 +39,7 @@ export default function Home() {
               <Link href="/" className="hover:text-[#4E1686] transition-colors text-[#4E1686]">Home</Link>
               <Link href="#features" className="hover:text-[#4E1686] transition-colors">Features</Link>
               <Link href="#how-it-works" className="hover:text-[#4E1686] transition-colors">How it Works</Link>
-              <Link href="/quote" className="bg-[#4E1686] text-white px-6 py-2 rounded-full hover:bg-[#3d126b] transition-colors shadow-md">Get Quote</Link>
+              <Link href="/quote" onClick={() => pixelEvents.clickGetQuote()} className="bg-[#4E1686] text-white px-6 py-2 rounded-full hover:bg-[#3d126b] transition-colors shadow-md">Get Quote</Link>
             </nav>
 
             {/* Mobile Menu Button */}
@@ -80,11 +81,11 @@ export default function Home() {
                 Designed for busy professionals and their families. Experience a fully digital onboarding process with zero paperwork on Coverme.lk.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 justify-center pt-4 sm:pt-8 px-6">
-                <a href="/quote" className="group bg-[#8CC63F] hover:bg-[#7ab332] text-white text-lg font-bold py-4 px-8 sm:py-5 sm:px-10 rounded-full transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 flex items-center justify-center gap-2 sm:gap-3 w-full sm:w-auto">
+                <a href="/quote" onClick={() => pixelEvents.clickGetQuote()} className="group bg-[#8CC63F] hover:bg-[#7ab332] text-white text-lg font-bold py-4 px-8 sm:py-5 sm:px-10 rounded-full transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1 flex items-center justify-center gap-2 sm:gap-3 w-full sm:w-auto">
                   Get Quote
                   <svg className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                 </a>
-                <a href="#features" className="text-[#002B5C] font-bold text-lg py-4 px-8 sm:py-5 sm:px-10 rounded-full border-2 border-gray-200 hover:border-[#4E1686] hover:text-[#4E1686] transition-all duration-300 flex items-center justify-center w-full sm:w-auto">
+                <a href="#features" onClick={() => pixelEvents.clickLearnMore()} className="text-[#002B5C] font-bold text-lg py-4 px-8 sm:py-5 sm:px-10 rounded-full border-2 border-gray-200 hover:border-[#4E1686] hover:text-[#4E1686] transition-all duration-300 flex items-center justify-center w-full sm:w-auto">
                   Learn More
                 </a>
               </div>

@@ -1,10 +1,13 @@
 'use client';
 
+import { pixelEvents } from '@/lib/pixel';
+
 export default function WhatsAppButton() {
     const phoneNumber = "94773340716";
     const message = "Hi, I'm interested in an insurance plan.";
 
     const handleClick = () => {
+        pixelEvents.clickWhatsApp();
         const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
         window.open(url, '_blank');
     };

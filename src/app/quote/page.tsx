@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, ChangeEvent, FormEvent } from 'react';
+import { pixelEvents } from '@/lib/pixel';
 
 const HospitalBenefitsList = () => (
     <div className="mt-4 p-4 bg-white/60 rounded-lg border border-purple-100 text-sm animate-fade-in text-left">
@@ -130,6 +131,8 @@ export default function QuotePage() {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         setLoading(true);
+        // Track form start
+        pixelEvents.initiateQuote();
         console.log('Sending Form Data:', formData);
 
         try {
@@ -142,8 +145,14 @@ export default function QuotePage() {
             });
 
             if (response.ok) {
+                // Track successful lead submission
+                pixelEvents.submitLead({
+                    full_name: formData.fullName,
+                    phone: formData.phone,
+                    email: formData.email,
+                });
+                pixelEvents.completeRegistration();
                 alert('Thank you! One of our agents will contact you shortly.');
-                // Optional: Reset form here if needed
             } else {
                 alert('There was an issue submitting your details. Please try again or contact us via WhatsApp.');
             }
